@@ -12,13 +12,13 @@ rodar uma migration (cria os campos no db)
 criar os campos necessarios na migration (na function up)
 criar dados fake na factory (duplicar metodo, ajustar e criar os fakers)
 alterar a seed para gerar dados fake (em seeds\DatabaseSeeder)
-	\NomeDoNamespace\Model::truncate(); //truncate na tabela
-    factory(\NomeDoNamespace\Model::class, QTDE)->create(); //cria QTDE de registros
+	\Namespace\Model::truncate(); //truncate na tabela
+    factory(\Namespace\Model::class, QTDE)->create(); //cria QTDE de registros
 ou
 criar um novo seeder
 	php artisan make:seeder ModelSeeder
-		\NomeDoNamespace\Model::truncate(); //truncate na tabela
-        factory(\NomeDoNamespace\Model::class, QTDE)->create(); //cria QTDE de registros
+		\Namespace\Model::truncate(); //truncate na tabela
+        factory(\Namespace\Model::class, QTDE)->create(); //cria QTDE de registros
     alterar em DatabaseSeeder
     	$this->call(NomeDoSeeder::class);
 
@@ -28,22 +28,42 @@ Rotas:
 Controllers:
 criar um controller
 	php artisan make:controller NomeDoController (vai para app\Controllers\) {deve ter os metodos em sintonia com a rota}
+	depois de criado services, da pra alterar o controller pra usar os mesmos
+
+Repository:
+	sugerido: https://github.com/andersao/l5-repository
+	criar a pasta app\Repositories (por exemplo)
+	as classes tem que extends BaseRepository ( public function model(){return Model::class;} )
+a arquitetura desenvolvida no curso requer uma interface, que vai requerir um service provider
+	php artisan make:provider NamespaceRepositoryProvider
+	fazer o bind no novo provider
+	configura o provider em config/app.php
+	alterar os controllers se tiver algum pra alterar
+
+Services:
+	criar a pasta app\Services (por exemplo)
+	migrar a regra de negocios do repository para o service
+
+Validators:
+	sugerido: https://github.com/andersao/laravel-validator
+	criar a pasta app\Validators (por exemplo)
 
 coisas do tinker (php artisan tinker)
 para criar um registro
-	$var = new NomeDoNamespace\Model;
+	$var = new Namespace\Model;
 	$var->campo = "um valor";
 	$var->save(); //salva o registro no banco
 para criar um conjunto de dados no construtor:
 	no model, criar protected $fillable = ['campo'] (colocar os campos aceitos no array)
-	rodar: NomeDoNamespace\Model::create(['campo' => 'valor',]);
+	rodar: Namespace\Model::create(['campo' => 'valor',]);
 para mostrar todos os registros:
-	rodar: NomeDoNamespace\Model::all();
+	rodar: Namespace\Model::all();
 para criar dados fake
-	rodar factory('NomeDoNamespace\Model', QTDE)->make(); //nao persiste
-	rodar factory('NomeDoNamespace\Model', QTDE)->create(); //persiste
+	rodar factory('Namespace\Model', QTDE)->make(); //nao persiste
+	rodar factory('Namespace\Model', QTDE)->create(); //persiste
 
 coisas gerais
+colocar os models em app/Entities (por exemplo) (criar a pasta e ajustar o namespace do que precisar {models, factory, seeders, etc})
 desativar csrf:
 	em app\Kernel.php:
 		tirar \CodeProject\Http\Middleware\VerifyCsrfToken::class, de protected $middlewareGroups = ['web' => [
