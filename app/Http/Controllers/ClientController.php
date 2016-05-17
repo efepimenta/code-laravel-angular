@@ -39,7 +39,7 @@ class ClientController extends Controller
         return $this->service->update($request->all(), $id);
     }
 
-    public function destroy($id){
-        $this->repository->find($id)->delete();
+    public function delete($id){
+        $this->service->delete($id);
     }
 }

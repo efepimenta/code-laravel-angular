@@ -25,11 +25,12 @@ class ClientService
         $this->validator = $validator;
     }
 
-    public function create(array $data){
+    public function create(array $data)
+    {
         try {
             $this->validator->with($data)->passesOrFail();
             return $this->repository->create($data);
-        } catch (ValidatorException $e){
+        } catch (ValidatorException $e) {
             return [
                 'error' => true,
                 'message' => $e->getMessageBag()
@@ -37,17 +38,35 @@ class ClientService
         }
     }
 
-    public function update(array $data, $id){
+    public function update(array $data, $id)
+    {
         try {
             $this->validator->with($data)->passesOrFail();
             $this->repository->update($data, $id);
-            //colocar um return legal aqui
-        } catch (ValidatorException $e){
+            return json_encode(['Message' => "Client {$data['name']} has updated"]);
+        } catch (ValidatorException $e) {
             return [
                 'error' => true,
                 'message' => $e->getMessageBag()
             ];
-        } catch(ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
+            return $this->returnNotFoundError($id);
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $cli = $this->repository->find($id);
+            $message = "Client {$cli['original']['name']} has deleted";
+            $cli->delete();
+            echo json_encode(['Message' => $message]);
+        } catch (ValidatorException $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessageBag()
+            ];
+        } catch (ModelNotFoundException $e) {
             return $this->returnNotFoundError($id);
         }
     }
