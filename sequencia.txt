@@ -3,13 +3,22 @@ cria um projeto vazio
 configura o .env (cria o banco de dados se necessario)
 altera o namespace padrao
 	php artisan app:name NovoNamespace
+
+Models:
+    php artisan make:model NomeDoModel
+    colocar os models em app/Entities (por exemplo) (criar a pasta e ajustar o namespace do que precisar {models, factory, seeders, etc})
+
+Controllers:
+criar um controller
+	php artisan make:controller NomeDoController (vai para app\Controllers\) {deve ter os metodos em sintonia com a rota}
+	depois de criado services, da pra alterar o controller pra usar os mesmos
+
 criar uma migration
 	php artisan make:model NomeDoModel -m (-m cria a migration)
-	criar os campos do db (cuidado aos tipos, deu erro com campo text que recebeu array na hora do seed)
+	criar os campos do db na migration (cuidado aos tipos, deu erro com campo text que recebeu array na hora do seed)
 rodar uma migration (cria os campos no db)
 	php artisan migrate
 
-criar os campos necessarios na migration (na function up)
 criar dados fake na factory (duplicar metodo, ajustar e criar os fakers)
 alterar a seed para gerar dados fake (em seeds\DatabaseSeeder)
 	\Namespace\Model::truncate(); //truncate na tabela
@@ -21,14 +30,11 @@ criar um novo seeder
         factory(\Namespace\Model::class, QTDE)->create(); //cria QTDE de registros
     alterar em DatabaseSeeder
     	$this->call(NomeDoSeeder::class);
+    rodar a seed: php artisan db:seed
 
 Rotas:
 	em app\routes.php (criar as rotas necessarias)
 	{ Route::get('/point', 'NomeDoController@index'); }
-Controllers:
-criar um controller
-	php artisan make:controller NomeDoController (vai para app\Controllers\) {deve ter os metodos em sintonia com a rota}
-	depois de criado services, da pra alterar o controller pra usar os mesmos
 
 Repository:
 	sugerido: https://github.com/andersao/l5-repository
@@ -37,7 +43,7 @@ Repository:
 a arquitetura desenvolvida no curso requer uma interface, que vai requerir um service provider
 	php artisan make:provider NamespaceRepositoryProvider
 	fazer o bind no novo provider
-	configura o provider em config/app.php
+	configura o provider em config/app.php { Prettus\Repository\Providers\RepositoryServiceProvider::class, }
 	alterar os controllers se tiver algum pra alterar
 
 Services:
@@ -63,7 +69,6 @@ para criar dados fake
 	rodar factory('Namespace\Model', QTDE)->create(); //persiste
 
 coisas gerais
-colocar os models em app/Entities (por exemplo) (criar a pasta e ajustar o namespace do que precisar {models, factory, seeders, etc})
 desativar csrf:
 	em app\Kernel.php:
 		tirar \CodeProject\Http\Middleware\VerifyCsrfToken::class, de protected $middlewareGroups = ['web' => [
