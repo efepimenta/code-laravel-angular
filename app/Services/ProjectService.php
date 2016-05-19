@@ -2,23 +2,22 @@
 
 namespace CodeProject\Services;
 
-use CodeProject\Repositories\ClientRepository;
-use CodeProject\Validators\ClientValidator;
+use CodeProject\Repositories\ProjectRepository;
+use CodeProject\Validators\ProjectValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 
-class ClientService
+class ProjectService
 {
-
     /**
-     * @var ClientRepository
+     * @var ProjectRepository
      */
     protected $repository;
     /**
-     * @var ClientValidator
+     * @var ProjectValidator
      */
     protected $validator;
 
-    public function __construct(ClientRepository $repository, ClientValidator $validator)
+    public function __construct(ProjectRepository $repository, ProjectValidator $validator)
     {
         $this->repository = $repository;
         $this->validator = $validator;
@@ -42,7 +41,7 @@ class ClientService
         try {
             $this->validator->with($data)->passesOrFail();
             $this->repository->update($data, $id);
-            return json_encode(['Message' => "Client {$data['name']} has updated"]);
+            return json_encode(['Message' => "Project {$data['name']} has updated"]);
         } catch (ValidatorException $e) {
             return [
                 'error' => true,
@@ -57,7 +56,7 @@ class ClientService
     {
         try {
             $cli = $this->repository->find($id);
-            $message = "Client {$cli['original']['name']} has deleted";
+            $message = "Project {$cli['original']['name']} has deleted";
             $cli->delete();
             echo json_encode(['Message' => $message]);
         } catch (ValidatorException $e) {
@@ -69,5 +68,4 @@ class ClientService
             return $this->returnNotFoundError($id);
         }
     }
-
 }

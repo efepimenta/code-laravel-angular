@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: suporte09
- * Date: 16/05/16
- * Time: 15:33
- */
 
 namespace CodeProject\Validators;
-
 
 use Prettus\Validator\LaravelValidator;
 

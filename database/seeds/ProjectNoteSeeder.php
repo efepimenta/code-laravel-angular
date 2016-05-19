@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ClientSeeder extends Seeder
+class ProjectNoteSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class ClientSeeder extends Seeder
     public function run()
     {
 //        \CodeProject\Entities\Client::truncate();
-        factory(\CodeProject\Entities\Client::class, 10)->create();
+        factory(\CodeProject\Entities\ProjectNote::class, 50)->create();
     }
 }
