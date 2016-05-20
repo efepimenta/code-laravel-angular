@@ -4,6 +4,7 @@ namespace CodeProject\Services;
 
 use CodeProject\Repositories\ClientRepository;
 use CodeProject\Validators\ClientValidator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ClientService
@@ -34,6 +35,8 @@ class ClientService
                 'error' => true,
                 'message' => $e->getMessageBag()
             ];
+        } catch (ModelNotFoundException $e) {
+            return $e->getMessage();
         }
     }
 
@@ -49,7 +52,7 @@ class ClientService
                 'message' => $e->getMessageBag()
             ];
         } catch (ModelNotFoundException $e) {
-            return $this->returnNotFoundError($id);
+            return $e->getMessage();
         }
     }
 
@@ -59,14 +62,14 @@ class ClientService
             $cli = $this->repository->find($id);
             $message = "Client {$cli['original']['name']} has deleted";
             $cli->delete();
-            echo json_encode(['Message' => $message]);
+            return json_encode(['Message' => $message]);
         } catch (ValidatorException $e) {
             return [
                 'error' => true,
                 'message' => $e->getMessageBag()
             ];
         } catch (ModelNotFoundException $e) {
-            return $this->returnNotFoundError($id);
+            return $e->getMessage();
         }
     }
 

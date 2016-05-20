@@ -6,6 +6,7 @@ use CodeProject\Repositories\ClientRepository;
 use CodeProject\Services\ClientService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ClientController extends Controller
 {
@@ -30,6 +31,11 @@ class ClientController extends Controller
             return $this->repository->all();
         } catch (ModelNotFoundException $e) {
             return ['Nada foi encontrado'];
+        } catch (NotFoundHttpException $e) {
+            return [
+                'error' => true,
+                'message' => 'Este projeto não existe.'
+            ];
         }
     }
 
@@ -39,6 +45,11 @@ class ClientController extends Controller
             return $this->repository->find($id);
         } catch (ModelNotFoundException $e) {
             return ['Pesquisa não retornou resultado'];
+        } catch (NotFoundHttpException $e) {
+            return [
+                'error' => true,
+                'message' => 'Este projeto não existe.'
+            ];
         }
     }
 
@@ -54,6 +65,6 @@ class ClientController extends Controller
 
     public function delete($id)
     {
-        $this->service->delete($id);
+        return $this->service->delete($id);
     }
 }

@@ -5,6 +5,7 @@ namespace CodeProject\Http\Controllers;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Services\ProjectService;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProjectController extends Controller
 {
@@ -29,6 +30,11 @@ class ProjectController extends Controller
             return $this->repository->with(['client', 'owner', 'notes'])->all();
         } catch (ModelNotFoundException $e) {
             return ['Nada foi encontrado'];
+        } catch (NotFoundHttpException $e) {
+            return [
+                'error' => true,
+                'message' => 'Este projeto não existe.'
+            ];
         }
     }
 
@@ -38,6 +44,11 @@ class ProjectController extends Controller
             return $this->repository->with(['client', 'owner', 'notes'])->find($id);
         } catch (ModelNotFoundException $e) {
             return ['Pesquisa não retornou resultado'];
+        } catch (NotFoundHttpException $e) {
+            return [
+                'error' => true,
+                'message' => 'Este projeto não existe.'
+            ];
         }
     }
 
@@ -53,6 +64,6 @@ class ProjectController extends Controller
 
     public function delete($id)
     {
-        $this->service->delete($id);
+        return $this->service->delete($id);
     }
 }

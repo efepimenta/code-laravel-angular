@@ -4,6 +4,8 @@ namespace CodeProject\Services;
 
 use CodeProject\Repositories\ProjectNoteRepository;
 use CodeProject\Validators\ProjectNoteValidator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectNoteService
@@ -23,9 +25,10 @@ class ProjectNoteService
         $this->validator = $validator;
     }
 
-    public function create(array $data)
+    public function create(array $data, $project_id)
     {
         try {
+            $data['project_id'] = $project_id;
             $this->validator->with($data)->passesOrFail();
             return $this->repository->create($data);
         } catch (ValidatorException $e) {
@@ -33,14 +36,17 @@ class ProjectNoteService
                 'error' => true,
                 'message' => $e->getMessageBag()
             ];
+        } catch (ModelNotFoundException $e) {
+            return $e->getMessage();
         }
     }
 
-    public function update(array $data, $id)
+    public function update(array $data, $project_id, $note_id)
     {
         try {
+            $data['project_id'] = $project_id;
             $this->validator->with($data)->passesOrFail();
-            $this->repository->update($data, $id);
+            $this->repository->update($data, $note_id);
             return json_encode(['Message' => "Project note {$data['title']} has updated"]);
         } catch (ValidatorException $e) {
             return [
@@ -48,24 +54,29 @@ class ProjectNoteService
                 'message' => $e->getMessageBag()
             ];
         } catch (ModelNotFoundException $e) {
-            return $this->returnNotFoundError($id);
+            return $e->getMessage();
         }
     }
 
-    public function delete($id)
+    public function delete($project_id, $note_id)
     {
         try {
-            $cli = $this->repository->find($id);
-            $message = "Project note {$cli['original']['title']} has deleted";
-            $cli->delete();
-            echo json_encode(['Message' => $message]);
+            $note = $this->repository->findWhere(['project_id' => $project_id, 'id' => $note_id]);
+            if (count($note) > 0){
+                $this->repository->delete($note_id);
+                $message = "Note deleted";
+                return json_encode(['Message' => $message]);
+            }
+            $message = "Note not found";
+            return json_encode(['Message' => $message]);
+
         } catch (ValidatorException $e) {
             return [
                 'error' => true,
                 'message' => $e->getMessageBag()
             ];
         } catch (ModelNotFoundException $e) {
-            return $this->returnNotFoundError($id);
+            return $e->getMessage();
         }
     }
 }
