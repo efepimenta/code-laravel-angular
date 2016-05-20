@@ -85,6 +85,7 @@ sequencia de um novo sei la
 - configura a seed
 	php artisan migrate:refresh --seed
 - atualiza o bind no provider
+- criar ou atualizar o validator e o service
 
 coisas gerais
 desativar csrf:

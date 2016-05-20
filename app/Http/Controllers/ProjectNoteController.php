@@ -23,23 +23,23 @@ class ProjectNoteController extends Controller
     public function __construct(ProjectNoteRepository $repository, ProjectNoteService $service)
     {
         $this->repository = $repository;
-        $this->service  = $service;
+        $this->service = $service;
     }
 
 
-    public function index()
+    public function index($id)
     {
         try {
-            return $this->repository->with(['project'])->all();
+            return $this->repository->findWhere(['project_id' => $id]);
         } catch (ModelNotFoundException $e) {
             return ['Nada foi encontrado'];
         }
     }
 
-    public function show($id)
+    public function show($id, $noteId)
     {
         try {
-            return $this->repository->with(['project'])->find($id);
+            return $this->repository->findWhere(['project_id' => $id, 'id' => $noteId]);
         } catch (ModelNotFoundException $e) {
             return ['Pesquisa não retornou resultado'];
         }
