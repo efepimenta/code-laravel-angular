@@ -37,7 +37,15 @@ class ProjectNoteService
                 'message' => $e->getMessageBag()
             ];
         } catch (ModelNotFoundException $e) {
-            return $e->getMessage();
+            return [
+                'error' => true,
+                'message' => 'Projeto/nota não encontrado'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
         }
     }
 
@@ -54,7 +62,15 @@ class ProjectNoteService
                 'message' => $e->getMessageBag()
             ];
         } catch (ModelNotFoundException $e) {
-            return $e->getMessage();
+            return [
+                'error' => true,
+                'message' => 'Este projeto/nota não existe(em).'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
         }
     }
 
@@ -64,11 +80,14 @@ class ProjectNoteService
             $note = $this->repository->findWhere(['project_id' => $project_id, 'id' => $note_id]);
             if (count($note) > 0){
                 $this->repository->delete($note_id);
-                $message = "Note deleted";
-                return json_encode(['Message' => $message]);
+                return [
+                    'message' => 'Nota excluída'
+                ];
             }
-            $message = "Note not found";
-            return json_encode(['Message' => $message]);
+            return [
+                'error' => true,
+                'message' => "Este projeto/nota não existe(em)."
+            ];
 
         } catch (ValidatorException $e) {
             return [
@@ -76,7 +95,15 @@ class ProjectNoteService
                 'message' => $e->getMessageBag()
             ];
         } catch (ModelNotFoundException $e) {
-            return $e->getMessage();
+            return [
+                'error' => true,
+                'message' => 'Este projeto/nota não existe(em).'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
         }
     }
 }

@@ -5,6 +5,7 @@ namespace CodeProject\Services;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Validators\ProjectValidator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectService
@@ -35,7 +36,15 @@ class ProjectService
                 'message' => $e->getMessageBag()
             ];
         } catch (ModelNotFoundException $e) {
-            return $e->getMessage();
+            return [
+                'error' => true,
+                'message' => 'Projeto não encontrado'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
         }
     }
 
@@ -51,7 +60,15 @@ class ProjectService
                 'message' => $e->getMessageBag()
             ];
         } catch (ModelNotFoundException $e) {
-            return $e->getMessage();
+            return [
+                'error' => true,
+                'message' => 'Projeto não encontrado'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
         }
     }
 
@@ -68,7 +85,20 @@ class ProjectService
                 'message' => $e->getMessageBag()
             ];
         } catch (ModelNotFoundException $e) {
-            return $e->getMessage();
+            return [
+                'error' => true,
+                'message' => 'Projeto não encontrado'
+            ];
+        } catch (QueryException $e){
+            return [
+                'error' => true,
+                'message' => 'Projeto não pode ser excluído. Existem notas para esse projeto?'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
         }
     }
 }
