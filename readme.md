@@ -7,7 +7,7 @@
 **post /client** {insere um novo cliente}  
 **put /client/{id}** {atualiza um determinado cliente (informado em id) **usar x-www-form-urlencoded**}  
 **delete /client/{id}** {remove um determinado cliente (informado em id)}  
-## endpoint /project{project_id}/note
+## endpoint /project/{project_id}/note
 **get /project/{project_id}/note**, {mostra as notas de um determinado projeto (informado em project_id)}  
 **get /project/{project_id}/note/{note_id}'** {mostra uma nota (informado em note_id) de um determinado projeto (informado em project_id)}  
 **post /project/{project_id}/note** ' {insere uma nota em um determinado projeto (informado em project_id)}  
