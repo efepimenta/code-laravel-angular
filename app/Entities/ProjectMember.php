@@ -3,11 +3,12 @@
 namespace CodeProject\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
 class ProjectMember extends Model
 {
+
+    protected $table = 'project_members';
+
     protected $fillable = [
         'project_id',
         'user_id',

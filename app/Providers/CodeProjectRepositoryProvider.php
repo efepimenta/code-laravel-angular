@@ -33,15 +33,10 @@ class CodeProjectRepositoryProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(ClientRepository::class,
-            ClientRepositoryEloquent::class);
-        $this->app->bind(ProjectRepository::class,
-            ProjectRepositoryEloquent::class);
-        $this->app->bind(ProjectNoteRepository::class,
-            ProjectNoteRepositoryEloquent::class);
-        $this->app->bind(ProjectTaskRepository::class,
-            ProjectTaskRepositoryEloquent::class);
-        $this->app->bind(ProjectMemberRepository::class,
-            ProjectMemberRepositoryEloquent::class);
+        $this->app->bind(ClientRepository::class, ClientRepositoryEloquent::class);
+        $this->app->bind(ProjectRepository::class, ProjectRepositoryEloquent::class);
+        $this->app->bind(ProjectNoteRepository::class, ProjectNoteRepositoryEloquent::class);
+        $this->app->bind(ProjectTaskRepository::class, ProjectTaskRepositoryEloquent::class);
+        $this->app->bind(ProjectMemberRepository::class, ProjectMemberRepositoryEloquent::class);
     }
 }

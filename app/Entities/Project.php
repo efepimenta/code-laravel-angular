@@ -25,14 +25,9 @@ class Project extends Model
         return $this->hasMany(ProjectNote::class);
     }
 
-    public function taskes()
+    public function tasks()
     {
         return $this->hasMany(ProjectTask::class);
-    }
-
-    public function members()
-    {
-        return $this->hasMany(ProjectMember::class);
     }
 
     public function owner()
@@ -43,5 +38,10 @@ class Project extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(ProjectMember::class);
     }
 }

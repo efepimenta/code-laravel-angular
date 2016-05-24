@@ -10,7 +10,7 @@ criar um controller
 	depois de criado services, da pra alterar o controller pra usar os mesmos
 
 Models:
-    php artisan make:model NomeDoModel (-m pra criar a miration)
+    php artisan make:model NomeDoModel (-m pra criar a migration)
     colocar os models em app/Entities (por exemplo) (criar a pasta e ajustar o namespace do que precisar {models, factory, seeders, etc})
 
 criar uma migration (melhor fazer ao criar o model)

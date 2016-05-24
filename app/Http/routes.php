@@ -27,3 +27,7 @@ Route::get('/project/{id}', 'ProjectController@show');
 Route::post('/project', 'ProjectController@create');
 Route::put('/project/{id}', 'ProjectController@update');
 Route::delete('/project/{id}', 'ProjectController@delete');
+
+Route::get('/project/{project_id}/members', 'ProjectMemberController@show');
+Route::post('/project/{project_id}/members', 'ProjectController@addMember');
+Route::delete('/project/{project_id}/members/{user_id}', 'ProjectController@removeMember');

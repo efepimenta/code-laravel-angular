@@ -2,11 +2,10 @@
 
 namespace CodeProject\Http\Controllers;
 
+use CodeProject\Http\Requests;
 use CodeProject\Repositories\ProjectTaskRepository;
 use CodeProject\Services\ProjectTaskService;
 use Illuminate\Http\Request;
-
-use CodeProject\Http\Requests;
 
 class ProjectTaskController extends Controller
 {

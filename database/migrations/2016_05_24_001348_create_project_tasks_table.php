@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateProjectTaskTable extends Migration
+class CreateProjectTasksTable extends Migration
 {
     /**
      * Run the migrations.

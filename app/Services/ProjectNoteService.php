@@ -5,17 +5,16 @@ namespace CodeProject\Services;
 use CodeProject\Repositories\ProjectNoteRepository;
 use CodeProject\Validators\ProjectNoteValidator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectNoteService
 {
     /**
-     * @var ProjectRepository
+     * @var ProjectNoteRepository
      */
     protected $repository;
     /**
-     * @var ProjectValidator
+     * @var ProjectNoteValidator
      */
     protected $validator;
 
