@@ -77,7 +77,8 @@ para criar dados fake
 
 ----------------------------------
 sequencia de um novo sei la
-- migration (php artisan make:migration client_project_notes_tables --create project_notes)
+- migration (php artisan make:migration client_project_notes_tables --create=project_notes)
+    em caso de alteracao de tabela: (php artisan make:migration add_id_in_client_project_notes_tables --table=project_notes)
 	configura o arquivo gerado
 	roda php artisan migrate
 - criar a entity (php artisan make:entity NoteProject)
