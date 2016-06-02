@@ -5,6 +5,7 @@ namespace CodeProject\Http\Controllers;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Services\ProjectService;
 use Illuminate\Http\Request;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class ProjectController extends Controller
 {
@@ -26,7 +27,7 @@ class ProjectController extends Controller
     public function index()
     {
         try {
-            return $this->repository->with(['client', 'owner', 'notes', 'tasks'])->all();
+            return $this->repository->with(['client', 'owner', 'notes', 'tasks'])->findWhere(['owner_id' => Authorizer::getResourceOwnerId()]);
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
@@ -42,8 +43,13 @@ class ProjectController extends Controller
 
     public function show($id)
     {
+        if (!$this->checkPermission($id)) {
+            return [
+                'Error' => 'Access forbidden',
+            ];
+        }
         try {
-            return $this->repository->with(['client', 'owner', 'notes', 'tasks'])->find($id);
+            return $this->repository->with(['client', 'owner', 'notes', 'tasks', 'members'])->find($id);
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
@@ -55,6 +61,22 @@ class ProjectController extends Controller
                 'message' => 'Este projeto não existe.'
             ];
         }
+    }
+
+    private function checkPermission($id)
+    {
+        if ($this->checkProjectOwner($id) || $this->checkProjectMember($id)) {
+            return true;
+        }
+        return false;
+    }
+
+    private function checkProjectOwner($id)
+    {
+        if ($this->repository->isOwner($id, Authorizer::getResourceOwnerId())) {
+            return true;
+        }
+        return false;
     }
 
     public function create(Request $request)
@@ -69,14 +91,29 @@ class ProjectController extends Controller
 
     public function delete($id)
     {
+        if (!$this->checkPermission($id)) {
+            return [
+                'Error' => 'Access forbidden',
+            ];
+        }
         return $this->service->delete($id);
     }
 
-    public function addMember(Request $request, $project_id){
+    public function addMember(Request $request, $project_id)
+    {
         return $this->service->addMember($request->all(), $project_id);
     }
 
-    public function removeMember($project_id, $user_id){
+    public function removeMember($project_id, $user_id)
+    {
         return $this->service->removeMember($project_id, $user_id);
+    }
+
+    private function checkProjectMember($id)
+    {
+        if ($this->repository->hasMember($id, Authorizer::getResourceOwnerId())) {
+            return true;
+        }
+        return false;
     }
 }

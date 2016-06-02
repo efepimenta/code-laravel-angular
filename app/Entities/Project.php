@@ -16,9 +16,9 @@ class Project extends Model
         'due_date',
     ];
 
-    protected $hidden = [
-        'owner_id', 'client_id',
-    ];
+//    protected $hidden = [
+//        'owner_id', 'client_id',
+//    ];
 
     public function notes()
     {
@@ -42,6 +42,6 @@ class Project extends Model
 
     public function members()
     {
-        return $this->belongsToMany(ProjectMember::class);
+        return $this->belongsToMany(User::class, 'project_members', 'project_id', 'member_id');
     }
 }

@@ -9,7 +9,8 @@
         "laravel/framework": "*",
         "prettus/l5-repository": "*",
         "prettus/laravel-validation": "*",
-        "league/fractal" : "*"
+        "league/fractal" : "*",
+        "lucadegasperi/oauth2-server-laravel": "5.1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "*",

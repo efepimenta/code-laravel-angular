@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class OauthClientSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,12 @@ class UserSeeder extends Seeder
     public function run()
     {
 //        \CodeProject\Entities\User::truncate();
-        factory(\CodeProject\Entities\User::class, 5)->create();//
+        factory(\CodeProject\Entities\User::class)->create([
+            'name' => 'fabio',
+            'email' => 'fabio@email.com',
+            'password' => bcrypt(123456),
+            'remember_token' => str_random(10),
+        ]);
+        
     }
 }
