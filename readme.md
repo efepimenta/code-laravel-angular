@@ -30,8 +30,8 @@
 **post /project/{project_id}/members** {adiciona um membro ao projeto (passar a chave user_id no body)}  
 **delete /project/{project_id}/members/{user_id}** {remove um membro de um projeto (passar a chave user_id no body)}  
 ## endpoint /project/{project_id}/files  
-**post /project/{project_id}/members** {adiciona um membro ao projeto (passar a chave user_id no body)}  
-**delete /project/{project_id}/members/{user_id}** {remove um membro de um projeto (passar a chave user_id no body) **usar x-www-form-urlencoded**}  
+**post /project/{project_id}/file** {adiciona um arquivo ao projeto}  
+**delete /project/{project_id}/file** {remove um membro de um projeto **usar x-www-form-urlencoded**}  
   
 ### para rodar um servidor:  
 na pasta do projeto, rodar **php artisan serve**, que disponibiliza acesso em http://localhost:8000  
