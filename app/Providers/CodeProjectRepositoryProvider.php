@@ -4,6 +4,8 @@ namespace CodeProject\Providers;
 
 use CodeProject\Repositories\ClientRepository;
 use CodeProject\Repositories\ClientRepositoryEloquent;
+use CodeProject\Repositories\ProjectFileRepository;
+use CodeProject\Repositories\ProjectFileRepositoryEloquent;
 use CodeProject\Repositories\ProjectMemberRepository;
 use CodeProject\Repositories\ProjectMemberRepositoryEloquent;
 use CodeProject\Repositories\ProjectNoteRepository;
@@ -38,5 +40,8 @@ class CodeProjectRepositoryProvider extends ServiceProvider
         $this->app->bind(ProjectNoteRepository::class, ProjectNoteRepositoryEloquent::class);
         $this->app->bind(ProjectTaskRepository::class, ProjectTaskRepositoryEloquent::class);
         $this->app->bind(ProjectMemberRepository::class, ProjectMemberRepositoryEloquent::class);
+        $this->app->bind(ProjectTaskRepository::class, ProjectTaskRepositoryEloquent::class);
+        $this->app->bind(ProjectMemberRepository::class, ProjectMemberRepositoryEloquent::class);
+        $this->app->bind(ProjectFileRepository::class, ProjectFileRepositoryEloquent::class);
     }
 }

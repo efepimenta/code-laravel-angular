@@ -26,7 +26,7 @@ class ClientService
         $this->validator = $validator;
     }
 
-    public function create(array $data)
+    public function store(array $data)
     {
         try {
             $this->validator->with($data)->passesOrFail();
@@ -44,7 +44,10 @@ class ClientService
         try {
             $this->validator->with($data)->passesOrFail();
             $this->repository->update($data, $id);
-            return json_encode(['Message' => "Client {$data['name']} has updated"]);
+            return [
+                'success' => true,
+                'message' => 'Cliente atualizado com sucesso'
+            ];
         } catch (ValidatorException $e) {
             return [
                 'error' => true,
@@ -63,13 +66,14 @@ class ClientService
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         try {
-            $cli = $this->repository->find($id);
-            $message = "Client {$cli['original']['name']} has deleted";
-            $cli->delete();
-            return json_encode(['Message' => $message]);
+            $this->repository->delete($id);
+            return [
+                'success' => true,
+                'message' => 'Cliente removido com sucesso'
+            ];
         } catch (ValidatorException $e) {
             return [
                 'error' => true,

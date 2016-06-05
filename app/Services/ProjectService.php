@@ -2,13 +2,15 @@
 
 namespace CodeProject\Services;
 
-use CodeProject\Entities\Project;
 use CodeProject\Entities\ProjectMember;
+use CodeProject\Repositories\ProjectFileRepository;
 use CodeProject\Repositories\ProjectMemberRepository;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Validators\ProjectValidator;
+use Illuminate\Contracts\Filesystem\Factory as Storage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
+use Illuminate\Filesystem\Filesystem;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectService
@@ -26,17 +28,40 @@ class ProjectService
      * @var ProjectMemberRepository
      */
     protected $member_repository;
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
+    /**
+     * @var Storage
+     */
+    private $storage;
+    /**
+     * @var ProjectFileRepository
+     */
+    private $file_repository;
 
-    public function __construct(ProjectRepository $repository, ProjectValidator $validator, ProjectMemberRepository $member_repository)
+    public function __construct(ProjectRepository $repository, ProjectValidator $validator, ProjectMemberRepository $member_repository,
+                                ProjectFileRepository $file_repository, Filesystem $filesystem, Storage $storage)
     {
         $this->repository = $repository;
         $this->validator = $validator;
         $this->member_repository = $member_repository;
+        $this->filesystem = $filesystem;
+        $this->storage = $storage;
+        $this->file_repository = $file_repository;
     }
 
-    public function create(array $data)
+    public function store(array $data)
     {
+        $proje = $this->repository->skipPresenter()->findWhere(['name' => $data['name']]);
         try {
+            if (count($proje) > 0) {
+                return [
+                    'error' => true,
+                    'message' => 'Projeto já existe'
+                ];
+            }
             $this->validator->with($data)->passesOrFail();
             return $this->repository->create($data);
         } catch (ValidatorException $e) {
@@ -61,7 +86,7 @@ class ProjectService
     {
         try {
             $this->validator->with($data)->passesOrFail();
-            $this->repository->update($data, $id);
+            $this->repository->skipPresenter()->update($data, $id);
             return json_encode(['Message' => "Project {$data['name']} has updated"]);
         } catch (ValidatorException $e) {
             return [
@@ -81,13 +106,16 @@ class ProjectService
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         try {
-            $cli = $this->repository->find($id);
+            $cli = $this->repository->skipPresenter()->find($id);
             $message = "Project {$cli['original']['name']} has deleted";
             $cli->delete();
-            echo json_encode(['Message' => $message]);
+            return [
+                'success' => true,
+                'message' => 'Projeto excuído com sucesso'
+            ];
         } catch (ValidatorException $e) {
             return [
                 'error' => true,
@@ -98,7 +126,7 @@ class ProjectService
                 'error' => true,
                 'message' => 'Projeto não encontrado'
             ];
-        } catch (QueryException $e){
+        } catch (QueryException $e) {
             return [
                 'error' => true,
                 'message' => 'Projeto não pode ser excluído. Existem notas para esse projeto?'
@@ -111,10 +139,11 @@ class ProjectService
         }
     }
 
-    public function addMember($data, $project_id){
+    public function addMember($data, $projectId)
+    {
         try {
-            if (!$this->isMember($project_id, $data['user_id'])) {
-                ProjectMember::create(['project_id' => $project_id, 'user_id' => $data['user_id']]);
+            if (!$this->isMember($projectId, $data['member_id'])) {
+                ProjectMember::create(['project_id' => $projectId, 'member_id' => $data['member_id']]);
                 return ['Message' => 'Membro agora faz parte deste projeto'];
             }
             return ['Message' => 'Membro já faz parte deste projeto'];
@@ -126,11 +155,11 @@ class ProjectService
         }
     }
 
-    public function removeMember($project_id, $user_id)
+    public function removeMember($projectId, $memberId)
     {
         try {
-            if ($this->isMember($project_id, $user_id)) {
-                $cli = ProjectMember::where(['project_id' => $project_id, 'user_id' => $user_id])->delete();
+            if ($this->isMember($projectId, $memberId)) {
+                $cli = ProjectMember::where(['project_id' => $projectId, 'member_id' => $memberId])->delete();
                 if ($cli > 0) {
                     return ['Message' => 'Membro removido'];
                 }
@@ -145,8 +174,39 @@ class ProjectService
         }
     }
 
-    private function isMember($project_id, $user_id){
-        $member = $this->member_repository->findWhere(['project_id' => $project_id, 'user_id' => $user_id]);
+    private function isMember($projectId, $memberId)
+    {
+        $member = $this->member_repository->findWhere(['project_id' => $projectId, 'member_id' => $memberId]);
         return count($member) > 0;
+    }
+
+    public function createFile(array $data)
+    {
+        try {
+            $project = $this->repository->skipPresenter()->find($data['project_id']);
+            $project_file = $project->files()->create($data);
+            $this->storage->put($project_file->id . '.' . $data['extension'], $this->filesystem->get($data['file']));
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+        return true;
+    }
+
+    public function deleteFile(array $data)
+    {
+        try {
+            $file = $this->file_repository->findWhere(['project_id' => $data['project_id'], 'name' => $data['name']]);
+            if (count($file) > 0) {
+                foreach ($file as $item) {
+                    $this->file_repository->delete($item->id);
+                    $this->storage->delete($item->id . '.' . $item->extension);
+                }
+            } else {
+                return false;
+            }
+        } catch (ValidatorException $e) {
+            return false;
+        }
+        return true;
     }
 }

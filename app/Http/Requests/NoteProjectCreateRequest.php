@@ -2,8 +2,6 @@
 
 namespace CodeProject\Http\Requests;
 
-use CodeProject\Http\Requests\Request;
-
 class NoteProjectCreateRequest extends Request
 {
     /**

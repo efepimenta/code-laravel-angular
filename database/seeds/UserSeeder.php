@@ -18,6 +18,8 @@ class OauthClientSeeder extends Seeder
             'password' => bcrypt(123456),
             'remember_token' => str_random(10),
         ]);
+
+        factory(\CodeProject\Entities\User::class, 4)->create();
         
     }
 }

@@ -27,6 +27,12 @@ class ProjectNoteService
     public function create(array $data, $project_id)
     {
         try {
+            if (count($this->repository->findWhere(['title' => $data['title']])) > 0){
+                return [
+                    'error' => true,
+                    'message' => 'Nota já existe'
+                ];
+            }
             $data['project_id'] = $project_id;
             $this->validator->with($data)->passesOrFail();
             return $this->repository->create($data);

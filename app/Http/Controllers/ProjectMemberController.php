@@ -2,11 +2,9 @@
 
 namespace CodeProject\Http\Controllers;
 
+use CodeProject\Http\Requests;
 use CodeProject\Repositories\ProjectMemberRepository;
 use CodeProject\Services\ProjectMemberService;
-use Illuminate\Http\Request;
-
-use CodeProject\Http\Requests;
 
 class ProjectMemberController extends Controller
 {
@@ -31,7 +29,7 @@ class ProjectMemberController extends Controller
     public function show($project_id)
     {
         try {
-            $members = $this->repository->with(['user'])->findWhere(['project_id' => $project_id]);
+            $members = $this->repository->findWhere(['project_id' => $project_id]);
             if (count($members) > 0) {
                 return $members;
             }
@@ -53,4 +51,5 @@ class ProjectMemberController extends Controller
             ];
         }
     }
+
 }

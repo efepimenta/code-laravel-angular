@@ -3,6 +3,8 @@
 namespace CodeProject\Repositories;
 
 use CodeProject\Entities\Project;
+use CodeProject\Presenters\ProjectPresenter;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Repository\Eloquent\BaseRepository;
 
 class ProjectRepositoryEloquent extends BaseRepository implements ProjectRepository
@@ -28,13 +30,23 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
 
     public function hasMember($projectId, $memberId)
     {
-        $project = $this->find($projectId);
+        try {
+            $project = $this->find($projectId);
+
+        } catch (ModelNotFoundException $e){
+            return false;
+        }
         foreach ($project->members as $member){
             if ($member->id == $memberId){
                 return true;
             }
         }
         return false;
+    }
+
+    public function presenter()
+    {
+        return ProjectPresenter::class;
     }
 
 }

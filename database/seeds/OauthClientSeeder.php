@@ -17,7 +17,5 @@ class UserSeeder extends Seeder
             'secret' => 'secret',
             'name' => 'AngularAPP',
         ]);
-
-        factory(\CodeProject\Entities\User::class, 4)->create();
     }
 }
