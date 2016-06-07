@@ -6,4 +6,4 @@ Homestead.json
 .env
 .idea/
 composer.lock
-resources/bower_components
+/resources/bower_components
