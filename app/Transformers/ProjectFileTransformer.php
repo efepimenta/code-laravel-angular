@@ -9,8 +9,6 @@ class ProjectFileTransformer extends TransformerAbstract
 {
     public function transform(ProjectFile $files)
     {
-        return [
-            $files,
-        ];
+        return $files;
     }
 }

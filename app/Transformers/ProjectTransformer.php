@@ -12,9 +12,7 @@ class ProjectTransformer extends TransformerAbstract
 
     public function transform(Project $project)
     {
-        return [
-            $project,
-        ];
+        return $project;
     }
 
     public function includeClient(Project $project)

@@ -9,8 +9,6 @@ class ClientTransformer extends TransformerAbstract
 {
     public function transform(Client $client)
     {
-        return [
-            $client,
-        ];
+        return $client;
     }
 }

@@ -8,8 +8,6 @@ use League\Fractal\TransformerAbstract;
 class ProjectNoteTransformer extends TransformerAbstract
 {
     public function transform(ProjectNote $note){
-        return [
-            $note,
-        ];
+        return $note;
     }
 }
