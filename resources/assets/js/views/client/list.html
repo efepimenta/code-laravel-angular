@@ -24,7 +24,10 @@
                                 <td>{{ cli.phone }}</td>
                                 <td>{{ cli.address }}</td>
                                 <td>{{ cli.obs }}</td>
-                                <td><a ng-href="#/clients/{{cli.id}}/edit">Editar</a></td>
+                                <td>
+                                    <a ng-href="#/clients/{{cli.id}}/edit">Editar</a> |
+                                    <a ng-href="#/clients/{{cli.id}}/delete">Excluir</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
