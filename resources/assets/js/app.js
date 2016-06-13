@@ -17,31 +17,6 @@ app.provider('appConfig', function () {
 
 app.config(['$routeProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigProvider',
     function ($routeProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
-        $routeProvider
-            .when('/login', {
-                templateUrl: 'build/views/login.html',
-                controller: 'LoginController'
-            })
-            .when('/home', {
-                templateUrl: 'build/views/home.html',
-                controller: 'HomeController'
-            })
-            .when('/clients', {
-                templateUrl: 'build/views/client/list.html',
-                controller: 'ClientListController'
-            })
-            .when('/clients/new', {
-                templateUrl: 'build/views/client/new.html',
-                controller: 'ClientNewController'
-            })
-            .when('/clients/:id/edit', {
-                templateUrl: 'build/views/client/edit.html',
-                controller: 'ClientEditController'
-            })
-            .when('/clients/:id/delete', {
-                templateUrl: 'build/views/client/delete.html',
-                controller: 'ClientDeleteController'
-            });
         OAuthProvider.configure({
             baseUrl: appConfigProvider.config.baseUrl,
             clientId: 'appid1',
@@ -55,6 +30,7 @@ app.config(['$routeProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigP
                 secure: false
             }
         });
+        $routeProvider.otherwise({redirectTo: '/home'});
     }]);
 
 app.run(['$rootScope', '$window', 'OAuth', function ($rootScope, $window, OAuth) {

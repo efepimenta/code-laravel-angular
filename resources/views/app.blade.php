@@ -75,13 +75,17 @@
     <script src="{{ asset('build/js/vendor/angular-oauth2.js') }}"></script>
 
     <script src="{{ asset('build/js/app.js') }}"></script>
+    {{--CONFIGS--}}
+    <script src="build/js/config/login.js"></script>
+    <script src="build/js/config/clients.js"></script>
+    <script src="build/js/config/projects.notes.js"></script>
     {{--CONTROLLERS--}}
     <script src="{{ asset('build/js/controllers/home.js') }}"></script>
     <script src="{{ asset('build/js/controllers/login.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/clientList.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/clientNew.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/clientEdit.js') }}"></script>
-    <script src="{{ asset('build/js/controllers/client/clientDelete.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/client/clientRemove.js') }}"></script>
     {{--SERVICES--}}
     <script src="{{ asset('build/js/services/client.js') }}"></script>
 @else

@@ -1,7 +1,8 @@
 var elixir = require('laravel-elixir'),
     liveReload = require('gulp-livereload'),
     clean = require('rimraf'),
-    gulp = require('gulp');
+    gulp = require('gulp'),
+    uglify = require('gulp-uglify');
 
 var config = {
     assets_path: './resources/assets',
@@ -52,9 +53,11 @@ gulp.task('copy-scripts', function () {
         config.assets_path + '/js/**/*.js'
     ])
         .pipe(gulp.dest(config.build_path_js))
+        .pipe(uglify())
         .pipe(liveReload());
     gulp.src(config.vendor_path_js)
         .pipe(gulp.dest(config.build_path_vendor_js))
+        .pipe(uglify())
         .pipe(liveReload());
 });
 
