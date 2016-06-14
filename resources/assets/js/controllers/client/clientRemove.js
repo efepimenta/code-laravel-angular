@@ -3,7 +3,7 @@ angular.module('app.controllers')
         function ($scope, $routeParams, $location, Client) {
             $scope.client = Client.show({id: $routeParams.id});
             $scope.delete = function () {
-                $scope.client.$delete().then(function (response) {
+                $scope.client[0].$delete().then(function (response) {
                     if (response.error === true){
                         $scope.client.resp = response;
                     } else {

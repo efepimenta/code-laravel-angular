@@ -15,7 +15,7 @@
                         <tbody>
                             <tr ng-repeat="note in notes">
                                 <td>{{ note.title }}</td>
-                                <td>{{ note.note }}</td>
+                                <td>{{ note.note | limitTo:40 }} ...</td>
                                 <td>
                                     <a ng-href="#/project/{{note.project_id}}/notes/{{note.id}}/edit">Editar</a> |
                                     <a ng-href="#/project/{{note.project_id}}/notes/{{note.id}}/remove">Excluir</a>
