@@ -1,24 +1,20 @@
 angular.module('app')
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-            .when('/project/:id/notes', {
-                templateUrl: 'build/views/client/list.html',
-                controller: 'ClientListController'
+            .when('/project/:idProject/notes', {
+                templateUrl: 'build/views/project/note/list.html',
+                controller: 'ProjectNoteListController'
             })
-            .when('/project/:id/notes/:idNote', {
-                templateUrl: 'build/views/client/new.html',
-                controller: 'ClientNewController'
+            .when('/project/:idProject/notes/new', {
+                templateUrl: 'build/views/project/note/new.html',
+                controller: 'ProjectNoteNewController'
             })
-            .when('/project/:id/notes/new', {
-                templateUrl: 'build/views/client/edit.html',
-                controller: 'ClientEditController'
+            .when('/project/:idProject/notes/:idNote/edit', {
+                templateUrl: 'build/views/project/note/edit.html',
+                controller: 'ProjectNoteEditController'
             })
-            .when('/project/:id/notes/:idNote/edit', {
-                templateUrl: 'build/views/client/remove.html',
-                controller: 'ClientRemoveController'
-            })
-            .when('/project/:id/notes/:idNote/remove', {
-                templateUrl: 'build/views/client/remove.html',
-                controller: 'ClientRemoveController'
+            .when('/project/:idProject/notes/:idNote/remove', {
+                templateUrl: 'build/views/project/note/remove.html',
+                controller: 'ProjectNoteRemoveController'
             });
     }]);
