@@ -54,7 +54,7 @@ $factory->define(CodeProject\Entities\Project::class, function (Faker\Generator 
 $factory->define(CodeProject\Entities\ProjectNote::class, function (Faker\Generator $faker) {
     return [
         'project_id' => rand(1, 5),
-        'title' => $faker->title,
+        'title' => $faker->text,
         'note' => $faker->paragraph,
     ];
 });

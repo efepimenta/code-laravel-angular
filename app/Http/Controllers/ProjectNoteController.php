@@ -35,12 +35,15 @@ class ProjectNoteController extends Controller
             if (count($notes) > 0) {
                 return json_encode($notes);
             }
-            return [
+            return json_encode([
                 'error' => true,
                 'message' => 'Projeto não encontrado'
-            ];
+            ]);
         } catch (ModelNotFoundException $e) {
-            return ['Nada foi encontrado'];
+            return [
+                'error' => true,
+                'message' => 'Nada foi encontrado'
+            ];
         } catch (NotFoundHttpException $e) {
             return [
                 'error' => true,

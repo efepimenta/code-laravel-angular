@@ -1,7 +1,10 @@
 angular.module('app.services')
     .service('ProjectNote', ['$resource', 'appConfig',
         function ($resource, appConfig) {
-            return $resource(appConfig.baseUrl + '/project/:idProject/notes/:idNote', {idProject: '1', idNote: '@idNote'}, {
+            return $resource(appConfig.baseUrl + '/project/:idProject/notes/:idNote', {
+                idProject: '1',
+                idNote: '@idNote'
+            }, {
                 query: {
                     method: 'GET',
                     isArray: true
@@ -13,8 +16,9 @@ angular.module('app.services')
                 update: {
                     method: 'PUT'
                 },
-                delete: {
-                    method: 'DELETE'
+                delete_note: {
+                    method: 'DELETE',
+                    params: {idProject: '1', idNote: '@idNote'}
                 }
             });
         }
