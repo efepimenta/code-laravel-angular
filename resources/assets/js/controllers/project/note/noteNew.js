@@ -4,8 +4,12 @@ angular.module('app.controllers')
             $scope.note = new ProjectNote({idNote: $routeParams.idNote, idProject: $routeParams.idProject});
             $scope.save = function () {
                 if ($scope.form.$valid) {
-                    $scope.note.$save().then(function () {
-                        $location.path('/project/'+$routeParams.idProject+'/notes');
+                    $scope.note.$save().then(function (response) {
+                        if (response.error === true){
+                            $scope.note.resp = response;
+                        } else {
+                            $location.path('/project/' + $routeParams.idProject + '/notes');
+                        }
                     });
                 }
             }

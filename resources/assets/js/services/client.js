@@ -8,7 +8,7 @@ angular.module('app.services')
                 },
                 show: {
                     method: 'GET',
-                    isArray: true
+                    isArray: false
                 },
                 update: {
                     method: 'PUT'

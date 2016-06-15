@@ -11,7 +11,7 @@
                              ng-class="{'has-error' : !form.name.$valid && form.name.$touched}">
                             <label class="col-md-4 control-label">Name</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="name" ng-model="client[0].name"
+                                <input type="text" class="form-control" name="name" ng-model="client.name"
                                        required>
                                 <div class="help-block" ng-messages="form.name.$error"
                                      ng-show="form.name.$touched">
@@ -24,7 +24,7 @@
                              ng-class="{'has-error' : !form.responsible.$valid && form.responsible.$touched}">
                             <label class="col-md-4 control-label">Responsible</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="responsible" ng-model="client[0].responsible"
+                                <input type="text" class="form-control" name="responsible" ng-model="client.responsible"
                                        required>
                                 <div class="help-block" ng-messages="form.responsible.$error"
                                      ng-show="form.responsible.$touched">
@@ -37,7 +37,7 @@
                              ng-class="{'has-error' : !form.email.$valid && form.email.$touched}">
                             <label class="col-md-4 control-label">Email</label>
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" ng-model="client[0].email"
+                                <input type="email" class="form-control" name="email" ng-model="client.email"
                                        required>
                                 <div class="help-block" ng-messages="form.email.$error"
                                      ng-show="form.email.$touched">
@@ -51,7 +51,7 @@
                              ng-class="{'has-error' : !form.phone.$valid && form.phone.$touched}">
                             <label class="col-md-4 control-label">Phone</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="phone" ng-model="client[0].phone"
+                                <input type="text" class="form-control" name="phone" ng-model="client.phone"
                                        required>
                                 <div class="help-block" ng-messages="form.phone.$error"
                                      ng-show="form.phone.$touched">
@@ -64,7 +64,7 @@
                              ng-class="{'has-error' : !form.address.$valid && form.address.$touched}">
                             <label class="col-md-4 control-label">Address</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="address" ng-model="client[0].address"
+                                <input type="text" class="form-control" name="address" ng-model="client.address"
                                        required>
                                 <div class="help-block" ng-messages="form.address.$error"
                                      ng-show="form.address.$touched">
@@ -77,7 +77,7 @@
                              ng-class="{'has-error' : !form.obs.$valid && form.obs.$touched}">
                             <label class="col-md-4 control-label">Obs</label>
                             <div class="col-md-6">
-                                <textarea class="form-control" name="obs" ng-model="client[0].obs" ng-required="true"></textarea>
+                                <textarea class="form-control" name="obs" ng-model="client.obs" ng-required="true"></textarea>
                                 <div class="help-block" ng-messages="form.obs.$error"
                                      ng-show="form.obs.$touched">
                                     <div ng-message="required">Campo obrigatório</div>

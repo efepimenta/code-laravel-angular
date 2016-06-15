@@ -29,7 +29,15 @@ class ClientController extends Controller
     {
         try {
             $data = $this->repository->all();
-            var_dump($data);die;
+            if (isset($data['data'])) {
+                return [
+                    'data' => $data['data']
+                ];
+            }
+            return [
+                'error' => true,
+                'message' => 'nenhum cliente existente.'
+            ];
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
@@ -52,9 +60,10 @@ class ClientController extends Controller
     {
         try {
             $data = $this->repository->findWhere(['id' => $id]);
-            var_dump($data);die;
-            if (count($data) === 1) {
-                return $data;
+            if (isset($data['data']) && count($data['data']) === 1) {
+                return [
+                    'data' => $data['data'][0]
+                ];
             }
             return [
                 'error' => true,

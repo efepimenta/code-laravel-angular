@@ -6,7 +6,6 @@
                 <div class="panel-body">
 
                     <form class="form-horizontal" role="form" name="form" method="POST" ng-submit="save()">
-
                         <div class="form-group"
                              ng-class="{'has-error' : !form.title.$valid && form.title.$touched}">
                             <label class="col-md-4 control-label">Title</label>
@@ -35,7 +34,8 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Alterar</button>
+                                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Alterar
+                                </button>
                             </div>
                         </div>
                     </form>

@@ -113,6 +113,7 @@
     {{--SERVICES--}}
     <script src="{{ asset('build/js/services/client.js') }}"></script>
     <script src="{{ asset('build/js/services/project.note.js') }}"></script>
+    <script src="{{ asset('build/js/services/user.js') }}"></script>
 @else
     <script src="{{ elixir('js/all.js') }}"></script>
 @endif
