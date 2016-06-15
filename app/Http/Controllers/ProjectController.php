@@ -27,7 +27,16 @@ class ProjectController extends Controller
     public function index()
     {
         try {
-            return $this->repository->findWhere(['owner_id' => Authorizer::getResourceOwnerId()]);
+            $data = $this->repository->findWhere(['owner_id' => Authorizer::getResourceOwnerId()]);
+            if (isset($data['data'])) {
+                return [
+                    'data' => $data['data']
+                ];
+            }
+            return [
+                'error' => true,
+                'message' => 'nenhum projeto para este usuário.'
+            ];
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
@@ -49,7 +58,16 @@ class ProjectController extends Controller
             ];
         }
         try {
-            return $this->repository->find($id);
+            $data = $this->repository->find($id);
+            if (isset($data['data'])) {
+                return [
+                    'data' => $data['data']
+                ];
+            }
+            return [
+                'error' => true,
+                'message' => 'Projeto não pertence ao usuário.'
+            ];
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,

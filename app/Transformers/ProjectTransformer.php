@@ -12,7 +12,16 @@ class ProjectTransformer extends TransformerAbstract
 
     public function transform(Project $project)
     {
-        return $project;
+        return [
+            'id' => $project->id,
+            'owner_id' => $project->owner_id,
+            'client_id' => $project->client_id,
+            'name' => $project->name,
+            'description' => $project->description,
+            'progress' => $project->progress,
+            'status' => $project->status,
+            'due_date' => $project->due_date
+        ];
     }
 
     public function includeClient(Project $project)

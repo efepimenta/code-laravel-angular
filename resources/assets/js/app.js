@@ -1,7 +1,8 @@
-var app = angular.module('app', ['ngRoute', 'angular-oauth2', 'app.services', 'app.controllers']);
+var app = angular.module('app', ['ngRoute', 'angular-oauth2', 'app.services', 'app.controllers', 'app.filters']);
 
 angular.module('app.controllers', ['angular-oauth2', 'ngMessages']);
 angular.module('app.services', ['ngResource']);
+angular.module('app.filters', []);
 
 app.provider('appConfig', function () {
     var config = {
