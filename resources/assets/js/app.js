@@ -7,7 +7,7 @@ angular.module('app.filters', []);
 app.provider('appConfig', function () {
     var config = {
         baseUrl: 'http://localhost:8000'
-    }
+    };
     return {
         config: config,
         $get: function () {
@@ -28,7 +28,7 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
                 return dataJson;
             }
             return data;
-        }
+        };
         OAuthProvider.configure({
             baseUrl: appConfigProvider.config.baseUrl,
             clientId: 'appid1',
@@ -58,6 +58,7 @@ app.run(['$rootScope', '$window', 'OAuth', function ($rootScope, $window, OAuth)
         }
 
         // Redirect to `/login` with the `error_reason`.
-        return $window.location.href = '/login?error_reason=' + rejection.data.error;
+        var error_address = $window.location.href = '/login?error_reason=' + rejection.data.error;
+        return error_address;
     });
 }]);
