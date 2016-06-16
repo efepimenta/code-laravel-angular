@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="pt-br" ng-app="app">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Laravel</title>
@@ -132,6 +133,8 @@
     <script src="{{ asset('build/js/services/user.js') }}"></script>
     <script src="{{ asset('build/js/services/project.note.js') }}"></script>
     <script src="{{ asset('build/js/services/project.js') }}"></script>
+    {{--FILTER--}}
+    <script src="{{ asset('build/js/filters/dateBr.js') }}"></script>
 @else
     <script src="{{ elixir('js/all.js') }}"></script>
 @endif

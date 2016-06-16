@@ -1,12 +1,39 @@
-var app = angular.module('app', ['ngRoute', 'angular-oauth2', 'app.services', 'app.controllers', 'app.filters']);
+var app = angular.module('app', ['ngRoute', 'angular-oauth2',
+    'app.services', 'app.controllers', 'app.filters']);
 
 angular.module('app.controllers', ['angular-oauth2', 'ngMessages']);
 angular.module('app.services', ['ngResource']);
 angular.module('app.filters', []);
 
-app.provider('appConfig', function () {
+app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamSerializerProvider) {
     var config = {
-        baseUrl: 'http://localhost:8000'
+        baseUrl: 'http://localhost:8000',
+        project: {
+            status: [
+                {value: 1, label: 'Não iniciado'},
+                {value: 2, label: 'Iniciado'},
+                {value: 3, label: 'Finalizado'}
+            ]
+        },
+        utils: {
+            transformRequest : function(data){
+                if (angular.isObject(data)){
+                    return $httpParamSerializerProvider.get()(data);
+                }
+                return data;
+            },
+            transformResponse: function (data, headers) {
+                var header = headers();
+                if (header['content-type'] === 'application/json' || header['content-type'] === 'text/json') {
+                    var dataJson = angular.fromJson(data);
+                    if (dataJson.hasOwnProperty('data')) {
+                        dataJson = dataJson.data;
+                    }
+                    return dataJson;
+                }
+                return data;
+            }
+        }
     };
     return {
         config: config,
@@ -14,21 +41,14 @@ app.provider('appConfig', function () {
             return config;
         }
     };
-});
+}]);
 
 app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigProvider',
     function ($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
-        $httpProvider.defaults.transformResponse = function (data, headers) {
-            var header = headers();
-            if (header['content-type'] === 'application/json' || header['content-type'] === 'text/json') {
-                var dataJson = angular.fromJson(data);
-                if (dataJson.hasOwnProperty('data')) {
-                    dataJson = dataJson.data;
-                }
-                return dataJson;
-            }
-            return data;
-        };
+        // $httpProvider.defaults.headers.post['Content-type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+        // $httpProvider.defaults.headers.put['Content-type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+        $httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
+        // $httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformRequest;
         OAuthProvider.configure({
             baseUrl: appConfigProvider.config.baseUrl,
             clientId: 'appid1',

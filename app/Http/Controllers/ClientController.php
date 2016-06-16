@@ -28,6 +28,7 @@ class ClientController extends Controller
     public function index()
     {
         try {
+            $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
             $data = $this->repository->all();
             if (isset($data['data'])) {
                 return [
