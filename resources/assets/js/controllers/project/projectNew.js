@@ -3,13 +3,12 @@ angular.module('app.controllers')
         ['$scope', '$location', '$routeParams', '$cookies', '$filter', 'Project', 'Client', 'appConfig',
             function ($scope, $location, $routeParams, $cookies, $filter, Project, Client, appConfig) {
                 $scope.project = new Project({idProject: $routeParams.idProject});
-                $scope.clients = Client.query();
                 $scope.status = appConfig.project.status;
                 $scope.save = function () {
                     if ($scope.form.$valid) {
                         $scope.project.owner_id = $cookies.getObject('user').id;
-                        var arr_data = $scope.project.due_date.split('/');
-                        $scope.project.due_date = $filter('date')(new Date(arr_data[2], arr_data[1] - 1, arr_data[0]), 'yyyy-MM-dd');
+                        console.log($scope.project.due_date);
+                        $scope.project.due_date = $filter('date')($scope.project.due_date, 'yyyy-MM-dd');
                         $scope.project.$save().then(function (response) {
                             if (response.error === true) {
                                 $scope.project.resp = response;
@@ -18,5 +17,28 @@ angular.module('app.controllers')
                             }
                         });
                     }
+                };
+                $scope.formatName = function (model) {
+                    if (model) {
+                        return model.name;
+                    }
+                    return '';
+                };
+                $scope.getClients = function (name) {
+                    return Client.query({
+                        search : name,
+                        searchFields: 'name:like'
+                    }).$promise;
+                };
+                $scope.selectClient = function (item) {
+                    $scope.project.client_id = item.id;
+                };
+                $scope.due_date = {
+                    status: {
+                        opened: false
+                    }
+                };
+                $scope.open = function () {
+                    $scope.due_date.status.opened = true;
                 };
             }]);

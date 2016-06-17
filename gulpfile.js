@@ -32,7 +32,7 @@ config.vendor_path_js = [
     config.bower_path + '/angular-resource/angular-resource.js',
     config.bower_path + '/angular-animate/angular-animate.js',
     config.bower_path + '/angular-messages/angular-messages.js',
-    config.bower_path + '/angular-bootstrap/ui-bootstrap.js',
+    config.bower_path + '/angular-bootstrap/ui-bootstrap-tpls.js',
     config.bower_path + '/angular-strap/dist/modules/navbar.js',
     config.bower_path + '/angular-cookies/angular-cookies.js',
     config.bower_path + '/query-string/query-string.js',

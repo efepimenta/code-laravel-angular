@@ -1,5 +1,5 @@
 var app = angular.module('app', ['ngRoute', 'angular-oauth2',
-    'app.services', 'app.controllers', 'app.filters']);
+    'app.services', 'app.controllers', 'app.filters', 'ui.bootstrap']);
 
 angular.module('app.controllers', ['angular-oauth2', 'ngMessages']);
 angular.module('app.services', ['ngResource']);
@@ -18,7 +18,7 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamS
         utils: {
             transformRequest : function(data){
                 if (angular.isObject(data)){
-                    return $httpParamSerializerProvider.get()(data);
+                    return $httpParamSerializerProvider.$get()(data);
                 }
                 return data;
             },

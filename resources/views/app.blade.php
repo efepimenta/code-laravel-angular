@@ -98,7 +98,7 @@
     <script src="{{ asset('build/js/vendor/angular-resource.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular-animate.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular-messages.js') }}"></script>
-    <script src="{{ asset('build/js/vendor/ui-bootstrap.js') }}"></script>
+    <script src="{{ asset('build/js/vendor/ui-bootstrap-tpls.js') }}"></script>
     <script src="{{ asset('build/js/vendor/navbar.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular-cookies.js') }}"></script>
     <script src="{{ asset('build/js/vendor/query-string.js') }}"></script>

@@ -12,6 +12,10 @@ angular.module('app.services')
                 },
                 update: {
                     method: 'PUT'
+                },
+                search: {
+                    method : 'GET',
+                    isArray: false
                 }
             });
         }
