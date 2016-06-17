@@ -36,7 +36,8 @@ config.vendor_path_js = [
     config.bower_path + '/angular-strap/dist/modules/navbar.js',
     config.bower_path + '/angular-cookies/angular-cookies.js',
     config.bower_path + '/query-string/query-string.js',
-    config.bower_path + '/angular-oauth2/dist/angular-oauth2.js'
+    config.bower_path + '/angular-oauth2/dist/angular-oauth2.js',
+    config.bower_path + '/ng-file-upload/ng-file-upload-all.js'
 ];
 config.build_path_html = config.build_path + '/views';
 config.build_path_fonts = config.build_path + '/fonts';

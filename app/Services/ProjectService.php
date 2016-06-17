@@ -155,6 +155,12 @@ class ProjectService
         }
     }
 
+    private function isMember($projectId, $memberId)
+    {
+        $member = $this->member_repository->findWhere(['project_id' => $projectId, 'member_id' => $memberId]);
+        return count($member) > 0;
+    }
+
     public function removeMember($projectId, $memberId)
     {
         try {
@@ -172,12 +178,6 @@ class ProjectService
                 'message' => $e->getMessage()
             ];
         }
-    }
-
-    private function isMember($projectId, $memberId)
-    {
-        $member = $this->member_repository->findWhere(['project_id' => $projectId, 'member_id' => $memberId]);
-        return count($member) > 0;
     }
 
     public function createFile(array $data)
@@ -208,5 +208,18 @@ class ProjectService
             return false;
         }
         return true;
+    }
+
+    public function updateFile(array $data, $id)
+    {
+        try {
+            $this->validator->with($data)->passesOrFail();
+            return $this->repository->update($data, $id);
+        } catch (ValidatorException $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
+        }
     }
 }

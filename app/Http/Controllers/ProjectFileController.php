@@ -2,7 +2,9 @@
 
 namespace CodeProject\Http\Controllers;
 
+use CodeProject\Repositories\ProjectFileRepository;
 use CodeProject\Repositories\ProjectRepository;
+use CodeProject\Services\ProjectFileService;
 use CodeProject\Services\ProjectService;
 use CodeProject\Validators\ProjectFileValidator;
 use Illuminate\Http\Request;
@@ -22,12 +24,43 @@ class ProjectFileController extends Controller
      * @var ProjectFileValidator
      */
     private $validator;
+    /**
+     * @var ProjectRepository
+     */
+    private $projectRepository;
+    /**
+     * @var ProjectService
+     */
+    private $projectService;
 
-    public function __construct(ProjectRepository $repository, ProjectService $service, ProjectFileValidator $validator)
+    public function __construct(ProjectFileRepository $repository, ProjectFileService $service, ProjectFileValidator $validator,
+                                ProjectRepository $projectRepository, ProjectService $projectService)
     {
         $this->repository = $repository;
         $this->service = $service;
         $this->validator = $validator;
+        $this->projectRepository = $projectRepository;
+        $this->projectService = $projectService;
+    }
+
+    public function index($project_id)
+    {
+        return $this->repository->skipPresenter()->findWhere(['project_id' => $project_id]);
+    }
+
+    public function show($file_id)
+    {
+        return $this->repository->find($file_id);
+    }
+
+    public function update(Request $request, $file_id)
+    {
+        return $this->repository->update($request->all(), $file_id);
+    }
+
+    public function download($file_id)
+    {
+        return response()->download($this->service->getFilePath($file_id));
     }
 
     public function store(Request $request, $project_id)
@@ -54,16 +87,7 @@ class ProjectFileController extends Controller
                 'message' => $e->getMessageBag(),
             ];
         }
-
-        $valid = ['png', 'jpg', 'pdf'];
-        if (!in_array($data['extension'], $valid)) {
-            return [
-                'error' => true,
-                'message' => 'Tipo de arqivo não permitido',
-                'aceitos' => $valid,
-            ];
-        }
-        if ($this->service->createFile($data)) {
+        if ($this->projectService->createFile($data)) {
             return [
                 'success' => true,
                 'message' => 'Envio de arquivo completo'
@@ -80,7 +104,7 @@ class ProjectFileController extends Controller
         $data['name'] = $request->name;
         $data['project_id'] = $project_id;
         $data['extension'] = $request->extension;
-        if ($this->service->deleteFile($data)) {
+        if ($this->projectService->deleteFile($data)) {
             return [
                 'success' => true,
                 'message' => 'Remoção de arquivo completo'

@@ -81,31 +81,6 @@ class ProjectController extends Controller
         }
     }
 
-    private function checkPermission($id)
-    {
-        if ($this->checkProjectOwner($id) || $this->checkProjectMember($id)) {
-            return true;
-        }
-        return false;
-    }
-
-    private function checkProjectOwner($id)
-    {
-        if ($this->repository->isOwner($id, Authorizer::getResourceOwnerId())) {
-            return true;
-        }
-        return false;
-    }
-
-    private function checkProjectMember($id)
-    {
-
-        if ($this->repository->hasMember($id, Authorizer::getResourceOwnerId())) {
-            return true;
-        }
-        return false;
-    }
-
     public function store(Request $request)
     {
         return $this->service->store($request->all());
@@ -134,6 +109,31 @@ class ProjectController extends Controller
     public function removeMember($projectId, $memberId)
     {
         return $this->service->removeMember($projectId, $memberId);
+    }
+
+    private function checkPermission($id)
+    {
+        if ($this->checkProjectOwner($id) || $this->checkProjectMember($id)) {
+            return true;
+        }
+        return false;
+    }
+
+    private function checkProjectOwner($id)
+    {
+        if ($this->repository->isOwner($id, Authorizer::getResourceOwnerId())) {
+            return true;
+        }
+        return false;
+    }
+
+    private function checkProjectMember($id)
+    {
+
+        if ($this->repository->hasMember($id, Authorizer::getResourceOwnerId())) {
+            return true;
+        }
+        return false;
     }
 
 }

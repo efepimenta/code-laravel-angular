@@ -64,6 +64,15 @@
                         <li><a href="#/project/1/notes/new">New Note</a></li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Project Files <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-href="#/project/1/files">File List</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#/project/1/file/new">New File</a></li>
+                    </ul>
+                </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -103,12 +112,14 @@
     <script src="{{ asset('build/js/vendor/angular-cookies.js') }}"></script>
     <script src="{{ asset('build/js/vendor/query-string.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular-oauth2.js') }}"></script>
+    <script src="{{ asset('build/js/vendor/ng-file-upload-all.js') }}"></script>
 
     <script src="{{ asset('build/js/app.js') }}"></script>
     {{--CONFIGS--}}
     <script src="build/js/config/login.js"></script>
     <script src="build/js/config/clients.js"></script>
     <script src="build/js/config/projects.notes.js"></script>
+    <script src="build/js/config/projects.files.js"></script>
     <script src="build/js/config/projects.js"></script>
     {{--CONTROLLERS--}}
     <script src="{{ asset('build/js/controllers/home.js') }}"></script>
@@ -128,13 +139,22 @@
     <script src="{{ asset('build/js/controllers/project/note/noteNew.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/noteEdit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/noteRemove.js') }}"></script>
+    {{--project files--}}
+    <script src="{{ asset('build/js/controllers/project/file/fileList.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/file/fileNew.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/file/fileEdit.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/file/fileRemove.js') }}"></script>
     {{--SERVICES--}}
+    <script src="{{ asset('build/js/services/url.js') }}"></script>
     <script src="{{ asset('build/js/services/client.js') }}"></script>
     <script src="{{ asset('build/js/services/user.js') }}"></script>
     <script src="{{ asset('build/js/services/project.note.js') }}"></script>
+    <script src="{{ asset('build/js/services/project.file.js') }}"></script>
     <script src="{{ asset('build/js/services/project.js') }}"></script>
     {{--FILTER--}}
     <script src="{{ asset('build/js/filters/dateBr.js') }}"></script>
+    {{--DIRECTIVES--}}
+    <script src="{{ asset('build/js/directives/fileDownload.js') }}"></script>
 @else
     <script src="{{ elixir('js/all.js') }}"></script>
 @endif

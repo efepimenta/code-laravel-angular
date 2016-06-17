@@ -1,9 +1,10 @@
 var app = angular.module('app', ['ngRoute', 'angular-oauth2',
-    'app.services', 'app.controllers', 'app.filters', 'ui.bootstrap']);
+    'app.services', 'app.controllers', 'app.filters', 'app.directives', 'ui.bootstrap', 'ngFileUpload']);
 
 angular.module('app.controllers', ['angular-oauth2', 'ngMessages']);
 angular.module('app.services', ['ngResource']);
 angular.module('app.filters', []);
+angular.module('app.directives', []);
 
 app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamSerializerProvider) {
     var config = {
@@ -14,6 +15,9 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamS
                 {value: 2, label: 'Iniciado'},
                 {value: 3, label: 'Finalizado'}
             ]
+        },
+        urls: {
+            projectFile: '/project/{{idProject}}/file/{{idFile}}'
         },
         utils: {
             transformRequest : function(data){
