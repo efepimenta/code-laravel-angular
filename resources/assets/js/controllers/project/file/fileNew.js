@@ -16,9 +16,16 @@ angular.module('app.controllers')
                             file: $scope.projectFile.file
                         }
                     }).then(function (resp) {
-                            $location.path('/project/' + $routeParams.idProject + '/files');
+                        if (resp.data.error === true) {
+                            $scope.projectFile.resp = resp.data;
+                        } else {
+                            $location.path('/project/'+$routeParams.idProject+'/files');
+                        }
                         }
                     );
                 }
+            };
+            $scope.back = function () {
+                $scope.projectFile.resp.error = false;
             };
         }]);

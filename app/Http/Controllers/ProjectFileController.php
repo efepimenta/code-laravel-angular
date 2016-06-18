@@ -48,19 +48,27 @@ class ProjectFileController extends Controller
         return $this->repository->skipPresenter()->findWhere(['project_id' => $project_id]);
     }
 
-    public function show($file_id)
+    public function show($project_id, $file_id)
     {
         return $this->repository->find($file_id);
+        return $this->repository->findWhere(['project_id' => $project_id, 'id' => $file_id]);
     }
 
-    public function update(Request $request, $file_id)
+    public function update(Request $request, $project_id, $file_id)
     {
         return $this->repository->update($request->all(), $file_id);
     }
 
     public function download($file_id)
     {
-        return response()->download($this->service->getFilePath($file_id));
+        $file_path = $this->service->getFilePath($file_id);
+        $file_content = file_get_contents($file_path);
+        $file = base64_encode($file_content);
+        return [
+            'file' => $file,
+            'size' => filesize($file_path),
+            'name' => $this->service->getFileName()
+        ];
     }
 
     public function store(Request $request, $project_id)
@@ -99,11 +107,10 @@ class ProjectFileController extends Controller
         ];
     }
 
-    public function destroy(Request $request, $project_id)
+    public function destroy($project_id, $fileId)
     {
-        $data['name'] = $request->name;
         $data['project_id'] = $project_id;
-        $data['extension'] = $request->extension;
+        $data['file_id'] = $fileId;
         if ($this->projectService->deleteFile($data)) {
             return [
                 'success' => true,

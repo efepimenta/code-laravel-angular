@@ -4,6 +4,8 @@ angular.module('app.controllers')
             function ($scope, appConfig, $routeParams, $location, $cookies, $filter, Project, Client, uibDateParser) {
                 Project.show({idProject: $routeParams.idProject},function (data) {
                     $scope.project = data;
+                    var dateEn = $scope.project.due_date.split('/');
+                    $scope.project.due_date = new Date(dateEn[2]+'-'+dateEn[1]+'-'+dateEn[0]);
                     $scope.format = 'dd/MM/yyyy';
                     Client.get({id: data.client_id}, function (data) {
                         $scope.clientSelected = data;

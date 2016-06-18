@@ -14,6 +14,7 @@ class ProjectFileTransformer extends TransformerAbstract
             'name' => $file->name,
             'description' => $file->description,
             'extension' => $file->extension,
+            'project_id' => $file->project_id
         ];
     }
 }

@@ -14,7 +14,7 @@ angular.module('app')
                 controller: 'ProjectFileEditController'
             })
             .when('/project/:idProject/file/:idFile/remove', {
-                templateUrl: 'build/views/project/note/remove.html',
+                templateUrl: 'build/views/project/file/remove.html',
                 controller: 'ProjectFileRemoveController'
             });
     }]);

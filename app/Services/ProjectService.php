@@ -195,7 +195,7 @@ class ProjectService
     public function deleteFile(array $data)
     {
         try {
-            $file = $this->file_repository->findWhere(['project_id' => $data['project_id'], 'name' => $data['name']]);
+            $file = $this->file_repository->skipPresenter()->findWhere(['project_id' => $data['project_id'], 'id' => $data['file_id']]);
             if (count($file) > 0) {
                 foreach ($file as $item) {
                     $this->file_repository->delete($item->id);
