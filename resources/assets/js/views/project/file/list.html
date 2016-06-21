@@ -17,7 +17,7 @@
                             <tr ng-repeat="file in files">
                                 <td>{{ file.name }}</td>
                                 <td>{{ file.description | limitTo:40 }} ...</td>
-                                <td><file-download id-file="{{ file.id }}"></file-download></td>
+                                <td><file-download id-project="{{ file.project_id }}" id-file="{{ file.id }}"></file-download></td>
                                 <td>
                                     <a ng-href="#/project/{{file.project_id}}/file/{{file.id}}/edit">Editar</a> |
                                     <a ng-href="#/project/{{file.project_id}}/file/{{file.id}}/remove">Excluir</a>

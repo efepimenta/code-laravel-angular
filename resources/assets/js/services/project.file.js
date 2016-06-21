@@ -22,7 +22,7 @@ angular.module('app.services')
                 },
                 download: {
                     method: 'GET',
-                    url: appConfig.baseUrl + Url.getUrlResource(appConfig.urls.projectFile) + '/download'
+                    url: appConfig.baseUrl + '/project/:idProject/file/:idFile/download'
                 }
             });
         }

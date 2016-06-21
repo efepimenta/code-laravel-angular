@@ -22,12 +22,14 @@ class ProjectController extends Controller
     {
         $this->repository = $repository;
         $this->service = $service;
+        $this->middleware('check.project.owner', ['except' => ['index', 'store', 'show']]);
+        $this->middleware('check.project.permission', ['except' => ['index', 'store', 'update', 'destroy']]);
     }
 
     public function index()
     {
         try {
-            $data = $this->repository->findWhere(['owner_id' => Authorizer::getResourceOwnerId()]);
+            $data = $this->repository->findWithOwnerAndMember(Authorizer::getResourceOwnerId());
             if (isset($data['data'])) {
                 return [
                     'data' => $data['data']
@@ -52,7 +54,7 @@ class ProjectController extends Controller
 
     public function show($id)
     {
-        if (!$this->checkPermission($id)) {
+        if (!$this->service->checkPermission($id)) {
             return [
                 'Error' => 'Access forbidden',
             ];
@@ -93,11 +95,6 @@ class ProjectController extends Controller
 
     public function destroy($id)
     {
-        if (!$this->checkPermission($id)) {
-            return [
-                'Error' => 'Access forbidden',
-            ];
-        }
         return $this->service->destroy($id);
     }
 
@@ -109,31 +106,6 @@ class ProjectController extends Controller
     public function removeMember($projectId, $memberId)
     {
         return $this->service->removeMember($projectId, $memberId);
-    }
-
-    private function checkPermission($id)
-    {
-        if ($this->checkProjectOwner($id) || $this->checkProjectMember($id)) {
-            return true;
-        }
-        return false;
-    }
-
-    private function checkProjectOwner($id)
-    {
-        if ($this->repository->isOwner($id, Authorizer::getResourceOwnerId())) {
-            return true;
-        }
-        return false;
-    }
-
-    private function checkProjectMember($id)
-    {
-
-        if ($this->repository->hasMember($id, Authorizer::getResourceOwnerId())) {
-            return true;
-        }
-        return false;
     }
 
 }

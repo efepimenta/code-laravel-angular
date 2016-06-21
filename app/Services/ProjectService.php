@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Filesystem\Filesystem;
 use Prettus\Validator\Exceptions\ValidatorException;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class ProjectService
 {
@@ -221,5 +222,30 @@ class ProjectService
                 'message' => $e->getMessage()
             ];
         }
+    }
+
+    public function checkPermission($id)
+    {
+        if ($this->checkProjectOwner($id) || $this->checkProjectMember($id)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function checkProjectOwner($id)
+    {
+        if ($this->repository->isOwner($id, Authorizer::getResourceOwnerId())) {
+            return true;
+        }
+        return false;
+    }
+
+    private function checkProjectMember($id)
+    {
+
+        if ($this->repository->hasMember($id, Authorizer::getResourceOwnerId())) {
+            return true;
+        }
+        return false;
     }
 }

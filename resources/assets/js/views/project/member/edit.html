@@ -7,42 +7,34 @@
 
                     <form class="form-horizontal" role="form" name="form" method="POST" ng-submit="save()">
                         <div class="form-group"
-                             ng-class="{'has-error' : !form.name.$valid && form.name.$touched}">
-                            <label class="col-md-4 control-label">Name</label>
+                             ng-class="{'has-error' : !form.title.$valid && form.title.$touched}">
+                            <label class="col-md-4 control-label">Title</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="name" ng-model="projectFile.name"
+                                <input type="text" class="form-control" name="title" ng-model="note.title"
                                        required>
-                                <div class="help-block" ng-messages="form.name.$error"
-                                     ng-show="form.name.$touched">
+                                <div class="help-block" ng-messages="form.title.$error"
+                                     ng-show="form.title.$touched">
                                     <div ng-message="required">Campo obrigatório</div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group"
-                             ng-class="{'has-error' : !form.description.$valid && form.description.$touched}">
+                             ng-class="{'has-error' : !form.note.$valid && form.note.$touched}">
                             <label class="col-md-4 control-label">Note</label>
                             <div class="col-md-6">
-                                <textarea class="form-control" name="description" ng-model="projectFile.description"
+                                <textarea class="form-control" name="note" ng-model="note.note"
                                           ng-required="true"></textarea>
-                                <div class="help-block" ng-messages="form.description.$error"
-                                     ng-show="form.description.$touched">
+                                <div class="help-block" ng-messages="form.note.$error"
+                                     ng-show="form.note.$touched">
                                     <div ng-message="required">Campo obrigatório</div>
                                 </div>
-                            </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Alterar
                                 </button>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Salve o arquivo</label>
-                            <div class="col-md-6">
-                                <file-download id-project="{{ projectFile.project_id }}" id-file="{{ projectFile.id }}"></file-download>
                             </div>
                         </div>
                     </form>
