@@ -56,13 +56,15 @@ class ProjectTaskController extends Controller
     public function show($project_id, $task_id)
     {
         try {
-            $notes = $this->repository->findWhere(['project_id' => $project_id, 'id' => $task_id]);
-            if (count($notes) > 0) {
-                return $notes;
+            $tasks = $this->repository->findWhere(['project_id' => $project_id, 'id' => $task_id]);
+            if (isset($tasks['data']) && count($tasks['data']) === 1) {
+                return [
+                    'data' => $tasks['data'][0]
+                ];
             }
             return [
                 'error' => true,
-                'message' => 'Projeto / tarefa não encontrado(s)'
+                'message' => 'Tarefa não encontrada'
             ];
         } catch (ModelNotFoundException $e) {
             return ['Pesquisa não retornou resultado'];
