@@ -7,18 +7,16 @@
                     <table class="table table-bordered table-responsive table-striped">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Note</th>
+                                <th>Id</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="note in notes">
-                                <td>{{ note.title }}</td>
-                                <td>{{ note.note | limitTo:40 }} ...</td>
+                            <tr ng-repeat="member in members">
+                                <td>{{ member.member_id }}</td>
                                 <td>
-                                    <a ng-href="#/project/{{note.project_id}}/notes/{{note.id}}/edit">Editar</a> |
-                                    <a ng-href="#/project/{{note.project_id}}/notes/{{note.id}}/remove">Excluir</a>
+                                    <a ng-href="#/project/{{member.project_id}}/member/{{member.id}}/edit">Editar</a> |
+                                    <a ng-href="#/project/{{member.project_id}}/member/{{member.id}}/remove">Excluir</a>
                                 </td>
                             </tr>
                         </tbody>

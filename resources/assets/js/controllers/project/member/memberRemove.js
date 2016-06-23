@@ -10,8 +10,9 @@ angular.module('app.controllers')
                     if (response.error === true) {
                         $scope.Member.resp = response;
                     } else {
-                        $location.path('/project/1/Members');
+                        $location.path('/project/' + $routeParams.idProject + '/members');
                     }
                 });
             };
-        }]);
+        }]
+    );

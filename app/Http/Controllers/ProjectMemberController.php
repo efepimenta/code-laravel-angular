@@ -30,8 +30,10 @@ class ProjectMemberController extends Controller
     {
         try {
             $members = $this->repository->findWhere(['project_id' => $project_id]);
-            if (count($members) > 0) {
-                return $members;
+            if (isset($members['data'])) {
+                return [
+                    'data' => $members['data']
+                ];
             }
             return [
                 'error' => true,

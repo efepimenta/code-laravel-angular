@@ -2,13 +2,15 @@
 
 namespace CodeProject\Transformers;
 
-use CodeProject\Entities\User;
+use CodeProject\Entities\ProjectMember;
 use League\Fractal\TransformerAbstract;
 
 class ProjectMemberTransformer extends TransformerAbstract
 {
-    public function transform(User $member)
+    public function transform(ProjectMember $member)
     {
-        return $member;
+        return [
+            'member_id' => $member->member_id
+        ];
     }
 }

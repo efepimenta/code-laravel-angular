@@ -5,12 +5,13 @@ angular.module('app.controllers')
             $scope.save = function () {
                 if ($scope.form.$valid) {
                     $scope.Member.$save().then(function (response) {
-                        if (response.error === true){
+                        if (response.error === true) {
                             $scope.Member.resp = response;
                         } else {
-                            $location.path('/project/' + $routeParams.idProject + '/Members');
+                            $location.path('/project/' + $routeParams.idProject + '/members');
                         }
                     });
                 }
             };
-        }]);
+        }]
+    );
