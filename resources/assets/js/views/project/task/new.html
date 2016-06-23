@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Nova Nota</div>
+                <div class="panel-heading">Nova Task</div>
                 <div class="panel-body">
 
                     <div ng-if="task.resp.error">
@@ -12,7 +12,7 @@
                                 Servidor diz: {{ task.resp.message }}
                             </div>
                         </div>
-                        <button type="button" class="btn btn-warning" onclick="javascript:window.history.go(-1)">
+                        <button type="button" class="btn btn-warning" ng-click="back()">
                             Voltar
                         </button>
                     </div>
@@ -20,34 +20,81 @@
                     <div ng-hide="task.resp.error">
                         <form class="form-horizontal" role="form" name="form" method="POST" ng-submit="save()">
                             <div class="form-group"
-                                 ng-class="{'has-error' : !form.title.$valid && form.title.$touched}">
-                                <label class="col-md-4 control-label">Title</label>
+                                 ng-class="{'has-error' : !form.name.$valid && form.name.$touched}">
+                                <label class="col-md-4 control-label">Name</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="title" ng-model="task.title"
+                                    <input type="text" class="form-control" name="name" ng-model="task.name"
                                            required>
-                                    <div class="help-block" ng-messages="form.title.$error"
-                                         ng-show="form.title.$touched">
+                                    <div class="help-block" ng-messages="form.name.$error"
+                                         ng-show="form.name.$touched">
                                         <div ng-message="required">Campo obrigatório</div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group"
-                                 ng-class="{'has-error' : !form.task.$valid && form.task.$touched}">
-                                <label class="col-md-4 control-label">task</label>
+                                 ng-class="{'has-error' : !form.start_date.$valid && form.start_date.$touched}">
+                                <label class="col-md-4 control-label">Start Date</label>
                                 <div class="col-md-6">
-                                <textarea class="form-control" name="task" ng-model="note.task"
-                                          ng-required="true"></textarea>
-                                    <div class="help-block" ng-messages="form.task.$error"
-                                         ng-show="form.task.$touched">
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" uib-datepicker-popup={{format}}
+                                               name="start_date"
+                                               ng-model="task.start_date" is-open="start_date.status.opened"
+                                               ng-required="true" close-text="Fechar"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openStart()"><i
+                                                    class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </p>
+                                    <div class="help-block" ng-messages="form.start_date.$error"
+                                         ng-show="form.start_date.$touched">
                                         <div ng-message="required">Campo obrigatório</div>
+                                        <div ng-message="date">Data inválida</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group"
+                                 ng-class="{'has-error' : !form.due_date.$valid && form.due_date.$touched}">
+                                <label class="col-md-4 control-label">Due Date</label>
+                                <div class="col-md-6">
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" uib-datepicker-popup={{format}}
+                                               name="due_date"
+                                               ng-model="task.due_date" is-open="due_date.status.opened"
+                                               ng-required="true" close-text="Fechar"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openDue()"><i
+                                                    class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </p>
+                                    <div class="help-block" ng-messages="form.due_date.$error"
+                                         ng-show="form.due_date.$touched">
+                                        <div ng-message="required">Campo obrigatório</div>
+                                        <div ng-message="date">Data inválida</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group"
+                                 ng-class="{'has-error' : !form.status.$valid && form.status.$touched}">
+                                <label class="col-md-4 control-label">Status</label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="status"
+                                           ng-model="task.status"
+                                           min="1" max="3" required>
+                                    <div class="help-block" ng-messages="form.status.$error"
+                                         ng-show="form.status.$touched">
+                                        <div ng-message="required">Campo obrigatório</div>
+                                        <div ng-message="min">Valor mínimo é 1</div>
+                                        <div ng-message="max">Valor máximo é 3</div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Salvar
+                                    <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Criar
                                     </button>
                                 </div>
                             </div>
