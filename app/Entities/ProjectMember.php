@@ -14,4 +14,12 @@ class ProjectMember extends Model
         'member_id',
     ];
 
+    public function project(){
+        return $this->belongsTo(Project::class);
+    }
+
+    public function member(){
+        return $this->belongsTo(User::class);
+    }
+
 }

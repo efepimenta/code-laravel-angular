@@ -9,6 +9,7 @@ use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 class ProjectTransformer extends TransformerAbstract
 {
 
+//    protected $defaultIncludes = ['members'];
 //    protected $defaultIncludes = ['members', 'client', 'notes', 'tasks', 'files'];
 
     public function transform(Project $project)
