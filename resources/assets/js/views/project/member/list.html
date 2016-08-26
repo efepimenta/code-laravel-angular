@@ -8,15 +8,16 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="member in members">
                                 <td>{{ member.member_id }}</td>
+                                <td>{{ member.name }}</td>
                                 <td>
-                                    <a ng-href="#/project/{{member.project_id}}/member/{{member.id}}/edit">Editar</a> |
-                                    <a ng-href="#/project/{{member.project_id}}/member/{{member.id}}/remove">Excluir</a>
+                                    <a ng-href="#/project/{{member.project_id}}/member/{{member.member_id}}/remove">Excluir</a>
                                 </td>
                             </tr>
                         </tbody>

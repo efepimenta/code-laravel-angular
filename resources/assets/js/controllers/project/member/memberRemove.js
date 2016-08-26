@@ -1,14 +1,14 @@
 angular.module('app.controllers')
     .controller('ProjectMemberRemoveController', ['$scope', '$routeParams', '$location', 'ProjectMember',
         function ($scope, $routeParams, $location, ProjectMember) {
-            $scope.Member = ProjectMember.show({idProject: $routeParams.idProject, idMember: $routeParams.idMember});
+            $scope.member = ProjectMember.show({idProject: $routeParams.idProject, idMember: $routeParams.idMember});
             $scope.delete = function () {
-                ProjectMember.delete_Member({
+                ProjectMember.delete_member({
                     idProject: $routeParams.idProject,
                     idMember: $routeParams.idMember
-                }, $scope.Member, function (response) {
+                }, $scope.member, function (response) {
                     if (response.error === true) {
-                        $scope.Member.resp = response;
+                        $scope.member.resp = response;
                     } else {
                         $location.path('/project/' + $routeParams.idProject + '/members');
                     }

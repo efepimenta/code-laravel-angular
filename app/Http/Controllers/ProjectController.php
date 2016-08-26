@@ -35,19 +35,20 @@ class ProjectController extends Controller
                     'data' => $data['data']
                 ];
             }
-            return [
+            return [[
                 'error' => true,
                 'message' => 'nenhum projeto para este usuário.'
-            ];
+            ]];
         } catch (ModelNotFoundException $e) {
-            return [
+            return [[
                 'error' => true,
                 'message' => 'Projeto não encontrado'
-            ];
+            ]];
         } catch (\Exception $e) {
-            return [
+            return [[
                 'error' => true,
-                'message' => 'Este projeto não existe.'
+                'message' => $e->getMessage()
+            ]
             ];
         }
     }
@@ -98,9 +99,9 @@ class ProjectController extends Controller
         return $this->service->destroy($id);
     }
 
-    public function addMember(Request $request, $projectId)
+    public function addMember($projectId, $member_id)
     {
-        return $this->service->addMember($request->all(), $projectId);
+        return $this->service->addMember($projectId, $member_id);
     }
 
     public function removeMember($projectId, $memberId)

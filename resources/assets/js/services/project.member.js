@@ -10,12 +10,13 @@ angular.module('app.services')
                     isArray: true,
                     url: appConfig.baseUrl + '/project/:idProject/members/:idMember'
                 },
+                save: {
+                    method: 'POST'
+                    // transformResponse: dateToEn
+                },
                 show: {
                     method: 'GET',
-                    isArray: false
-                },
-                update: {
-                    method: 'PUT'
+                    isArray: true
                 },
                 delete_member: {
                     method: 'DELETE'

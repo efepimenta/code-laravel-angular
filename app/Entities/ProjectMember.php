@@ -19,7 +19,7 @@ class ProjectMember extends Model
     }
 
     public function member(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Client::class);
     }
 
 }

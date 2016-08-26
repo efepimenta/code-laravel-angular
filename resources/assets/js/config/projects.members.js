@@ -5,15 +5,11 @@ angular.module('app')
                 templateUrl: 'build/views/project/member/list.html',
                 controller: 'ProjectMemberListController'
             })
-            .when('/project/:idProject/members/new', {
+            .when('/project/:idProject/member/new', {
                 templateUrl: 'build/views/project/member/new.html',
                 controller: 'ProjectMemberNewController'
             })
-            .when('/project/:idProject/members/:idMember/edit', {
-                templateUrl: 'build/views/project/member/edit.html',
-                controller: 'ProjectMemberEditController'
-            })
-            .when('/project/:idProject/members/:idMember/remove', {
+            .when('/project/:idProject/member/:idMember/remove', {
                 templateUrl: 'build/views/project/member/remove.html',
                 controller: 'ProjectMemberRemoveController'
             });

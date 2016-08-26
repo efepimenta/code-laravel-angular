@@ -140,14 +140,14 @@ class ProjectService
         }
     }
 
-    public function addMember($data, $projectId)
+    public function addMember($projectId, $member_id)
     {
         try {
-            if (!$this->isMember($projectId, $data['member_id'])) {
-                ProjectMember::create(['project_id' => $projectId, 'member_id' => $data['member_id']]);
-                return ['Message' => 'Membro agora faz parte deste projeto'];
+            if (!$this->isMember($projectId, $member_id)) {
+                ProjectMember::create(['project_id' => $projectId, 'member_id' => $member_id]);
+                return ['message' => 'Membro agora faz parte deste projeto'];
             }
-            return ['Message' => 'Membro já faz parte deste projeto'];
+            return ['error' => true, 'message' => 'Membro já faz parte deste projeto'];
         } catch (\Exception $e) {
             return [
                 'error' => true,
@@ -159,6 +159,9 @@ class ProjectService
     private function isMember($projectId, $memberId)
     {
         $member = $this->member_repository->findWhere(['project_id' => $projectId, 'member_id' => $memberId]);
+        if (isset($member['data'])){
+            return count($member['data']) > 0;
+        }
         return count($member) > 0;
     }
 

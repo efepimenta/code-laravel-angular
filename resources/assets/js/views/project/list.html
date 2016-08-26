@@ -2,8 +2,12 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Notas de um Projeto</div>
-                <div class="panel-body">
+                <div class="panel-heading">Projetos</div>
+                <div ng-if="error" class="text-center">
+                    <p>Nenhum projeto encontrado para você!</p>
+                    <p>Servidor diz: {{message}}</p>
+                </div>
+                <div class="panel-body" ng-if="!error">
                     <table class="table table-bordered table-responsive table-striped">
                         <thead>
                             <tr>
