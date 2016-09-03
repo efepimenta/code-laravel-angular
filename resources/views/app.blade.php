@@ -97,6 +97,7 @@
                 @if(auth()->guest())
                     @if(!Request::is('auth/login'))
                         <li><a href="{{ url('#/login') }}">Login</a></li>
+                        <li><a href="{{ url('#/logout') }}">Logout</a></li>
                     @endif
                     @if(!Request::is('auth/register'))
                         <li><a href="{{ url('/auth/register') }}">Register</a></li>
@@ -106,7 +107,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">{{ auth()->user()->name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+                            <li><a href="{{ url('/logout') }}">Logout</a></li>
                         </ul>
                     </li>
                 @endif
@@ -135,6 +136,7 @@
     <script src="{{ asset('build/js/app.js') }}"></script>
     {{--CONFIGS--}}
     <script src="build/js/config/login.js"></script>
+    <script src="build/js/config/logout.js"></script>
     <script src="build/js/config/clients.js"></script>
     <script src="build/js/config/projects.notes.js"></script>
     <script src="build/js/config/projects.tasks.js"></script>
@@ -167,7 +169,6 @@
     {{--project members--}}
     <script src="{{ asset('build/js/controllers/project/member/memberList.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/member/memberNew.js') }}"></script>
-    <script src="{{ asset('build/js/controllers/project/member/memberEdit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/member/memberRemove.js') }}"></script>
     {{--project files--}}
     <script src="{{ asset('build/js/controllers/project/file/fileList.js') }}"></script>
@@ -175,6 +176,7 @@
     <script src="{{ asset('build/js/controllers/project/file/fileEdit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/file/fileRemove.js') }}"></script>
     {{--SERVICES--}}
+    <script src="{{ asset('build/js/services/oauthFixInterceptor.js') }}"></script>
     <script src="{{ asset('build/js/services/url.js') }}"></script>
     <script src="{{ asset('build/js/services/client.js') }}"></script>
     <script src="{{ asset('build/js/services/user.js') }}"></script>
