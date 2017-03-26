@@ -4,21 +4,24 @@ configura o .env (cria o banco de dados se necessario)
 altera o namespace padrao
 	php artisan app:name NovoNamespace
 
-Models:
-    php artisan make:model NomeDoModel
-    colocar os models em app/Entities (por exemplo) (criar a pasta e ajustar o namespace do que precisar {models, factory, seeders, etc})
-
 Controllers:
 criar um controller
 	php artisan make:controller NomeDoController (vai para app\Controllers\) {deve ter os metodos em sintonia com a rota}
 	depois de criado services, da pra alterar o controller pra usar os mesmos
 
-criar uma migration
-	php artisan make:model NomeDoModel -m (-m cria a migration)
+Models:
+    php artisan make:model NomeDoModel (-m pra criar a miration)
+    colocar os models em app/Entities (por exemplo) (criar a pasta e ajustar o namespace do que precisar {models, factory, seeders, etc})
+
+criar uma migration (melhor fazer ao criar o model)
+	php artisan make:migration NomeDoModel -m (-m cria a migration)
 	criar os campos do db na migration (cuidado aos tipos, deu erro com campo text que recebeu array na hora do seed)
 rodar uma migration (cria os campos no db)
 	php artisan migrate
+	php artisan migrate:refresh --seed (recria tudo)
+	talvez um composer dump-autoload
 
+Factory / Seeds
 criar dados fake na factory (duplicar metodo, ajustar e criar os fakers)
 alterar a seed para gerar dados fake (em seeds\DatabaseSeeder)
 	\Namespace\Model::truncate(); //truncate na tabela
@@ -50,6 +53,10 @@ Services:
 	criar a pasta app\Services (por exemplo)
 	migrar a regra de negocios do repository para o service
 
+Entity
+	php artisan make:entity
+		cria a entity, o provider e o repository (tem que fazer o bind)
+
 Validators:
 	sugerido: https://github.com/andersao/laravel-validator
 	criar a pasta app\Validators (por exemplo)
@@ -67,6 +74,17 @@ para mostrar todos os registros:
 para criar dados fake
 	rodar factory('Namespace\Model', QTDE)->make(); //nao persiste
 	rodar factory('Namespace\Model', QTDE)->create(); //persiste
+
+----------------------------------
+sequencia de um novo sei la
+- migration (php artisan make:migration client_project_notes_tables --create project_notes)
+	configura o arquivo gerado
+	roda php artisan migrate
+- criar a entity (php artisan make:entity NoteProject)
+- configura a factory
+- configura a seed
+	php artisan migrate:refresh --seed
+- atualiza o bind no provider
 
 coisas gerais
 desativar csrf:

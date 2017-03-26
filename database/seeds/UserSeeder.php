@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ClientSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class ClientSeeder extends Seeder
      */
     public function run()
     {
-//        \CodeProject\Entities\Client::truncate();
-        factory(\CodeProject\Entities\Client::class, 10)->create();
+//        \CodeProject\Entities\User::truncate();
+        factory(\CodeProject\Entities\User::class, 5)->create();//
     }
 }

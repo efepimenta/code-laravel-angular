@@ -2,23 +2,22 @@
 
 namespace CodeProject\Http\Controllers;
 
-use CodeProject\Repositories\ClientRepository;
-use CodeProject\Services\ClientService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use CodeProject\Repositories\ProjectRepository;
+use CodeProject\Services\ProjectService;
 use Illuminate\Http\Request;
 
-class ClientController extends Controller
+class ProjectController extends Controller
 {
     /**
-     * @var ClientRepository
+     * @var ProjectRepository
      */
     private $repository;
     /**
-     * @var ClientService
+     * @var ProjectService
      */
     private $service;
 
-    public function __construct(ClientRepository $repository, ClientService $service)
+    public function __construct(ProjectRepository $repository, ProjectService $service)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -27,7 +26,7 @@ class ClientController extends Controller
     public function index()
     {
         try {
-            return $this->repository->all();
+            return $this->repository->with(['client', 'owner', 'notes'])->all();
         } catch (ModelNotFoundException $e) {
             return ['Nada foi encontrado'];
         }
@@ -36,7 +35,7 @@ class ClientController extends Controller
     public function show($id)
     {
         try {
-            return $this->repository->find($id);
+            return $this->repository->with(['client', 'owner', 'notes'])->find($id);
         } catch (ModelNotFoundException $e) {
             return ['Pesquisa não retornou resultado'];
         }
