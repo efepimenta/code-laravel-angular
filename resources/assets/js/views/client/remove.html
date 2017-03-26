@@ -4,13 +4,18 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Exclusão de Cliente</div>
                 <div class="panel-body">
-                    <div class="alert alert-danger" ng-if="client.resp.error">
-                        <strong>Whoops!</strong> Alguma coisa errada aconteceu.<br><br>
-                        <div>
-                            Servidor diz: {{ client.resp.message }}
+                    <div ng-if="client.resp.error">
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> Alguma coisa errada aconteceu.<br><br>
+                            <div>
+                                Servidor diz: {{ client.resp.message }}
+                            </div>
                         </div>
+                        <button type="button" class="btn btn-warning" onclick="javascript:window.history.go(-1)">
+                            Voltar
+                        </button>
                     </div>
-                    <div>
+                    <div ng-hide="client.resp.error">
                         <p>Dados do Client a ser excluído</p>
                         <ul>
                             <li><strong>Name:</strong> {{ client.name }}</li>

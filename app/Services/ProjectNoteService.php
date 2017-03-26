@@ -82,7 +82,7 @@ class ProjectNoteService
     public function delete($project_id, $note_id)
     {
         try {
-            $note = $this->repository->findWhere(['project_id' => $project_id, 'id' => $note_id]);
+            $note = $this->repository->skipPresenter()->findWhere(['project_id' => $project_id, 'id' => $note_id]);
             if (count($note) > 0){
                 $this->repository->delete($note_id);
                 return [
