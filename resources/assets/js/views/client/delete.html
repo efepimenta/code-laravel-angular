@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Exclusão de Cliente</div>
+                <div class="panel-body">
+                    <div class="alert alert-danger" ng-if="client.resp.error">
+                        <strong>Whoops!</strong> Alguma coisa errada aconteceu.<br><br>
+                        <div>
+                            Servidor diz: {{ client.resp.message }}
+                        </div>
+                    </div>
+                    <div>
+                        <p>Dados do Client a ser excluído</p>
+                        <ul>
+                            <li><strong>Name:</strong> {{ client.name }}</li>
+                            <li><strong>Email:</strong> {{ client.email }}</li>
+                            <li><strong>Phone:</strong> {{ client.phone }}</li>
+                        </ul>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="button" class="btn btn-danger" ng-click="delete()">Excluir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

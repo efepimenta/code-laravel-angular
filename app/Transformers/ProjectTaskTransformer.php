@@ -9,8 +9,6 @@ class ProjectTaskTransformer extends TransformerAbstract
 {
     public function transform(ProjectTask $task)
     {
-        return [
-            $task,
-        ];
+        return $task;
     }
 }

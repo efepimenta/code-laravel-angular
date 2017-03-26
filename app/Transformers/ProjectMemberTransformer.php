@@ -9,8 +9,6 @@ class ProjectMemberTransformer extends TransformerAbstract
 {
     public function transform(User $member)
     {
-        return [
-            $member,
-        ];
+        return $member;
     }
 }

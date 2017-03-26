@@ -28,7 +28,8 @@ class ClientController extends Controller
     public function index()
     {
         try {
-            return $this->repository->all();
+            $data = $this->repository->all();
+            return $data['data'];
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
@@ -50,7 +51,8 @@ class ClientController extends Controller
     public function show($id)
     {
         try {
-            return $this->repository->find($id);
+            $data = $this->repository->findWhere(['id' => $id]);
+            return json_encode($data['data'][0]);
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
