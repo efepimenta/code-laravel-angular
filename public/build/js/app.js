@@ -1,7 +1,8 @@
-var app = angular.module('app', ['ngRoute', 'angular-oauth2', 'app.services', 'app.controllers']);
+var app = angular.module('app', ['ngRoute', 'angular-oauth2', 'app.services', 'app.controllers', 'app.filters']);
 
 angular.module('app.controllers', ['angular-oauth2', 'ngMessages']);
 angular.module('app.services', ['ngResource']);
+angular.module('app.filters', []);
 
 app.provider('appConfig', function () {
     var config = {
@@ -15,8 +16,19 @@ app.provider('appConfig', function () {
     };
 });
 
-app.config(['$routeProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigProvider',
-    function ($routeProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
+app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigProvider',
+    function ($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
+        $httpProvider.defaults.transformResponse = function (data, headers) {
+            var header = headers();
+            if (header['content-type'] === 'application/json' || header['content-type'] === 'text/json') {
+                var dataJson = angular.fromJson(data);
+                if (dataJson.hasOwnProperty('data')) {
+                    dataJson = dataJson.data;
+                }
+                return dataJson;
+            }
+            return data;
+        }
         OAuthProvider.configure({
             baseUrl: appConfigProvider.config.baseUrl,
             clientId: 'appid1',

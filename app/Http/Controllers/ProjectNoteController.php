@@ -31,14 +31,16 @@ class ProjectNoteController extends Controller
     public function index($project_id)
     {
         try {
-            $notes = $this->repository->skipPresenter()->findWhere(['project_id' => $project_id]);
-            if (count($notes) > 0) {
-                return json_encode($notes);
+            $notes = $this->repository->findWhere(['project_id' => $project_id]);
+            if (isset($notes['data'])) {
+                return [
+                    'data' => $notes['data']
+                ];
             }
-            return json_encode([
+            return [
                 'error' => true,
                 'message' => 'Projeto não encontrado'
-            ]);
+            ];
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
@@ -60,9 +62,11 @@ class ProjectNoteController extends Controller
     public function show($project_id, $noteId)
     {
         try {
-            $notes = $this->repository->skipPresenter()->findWhere(['project_id' => $project_id, 'id' => $noteId]);
-            if (count($notes) === 1) {
-                return json_encode($notes[0]);
+            $notes = $this->repository->findWhere(['project_id' => $project_id, 'id' => $noteId]);
+            if (isset($notes['data']) && count($notes['data']) === 1) {
+                return [
+                    'data' => $notes['data'][0]
+                ];
             }
             return [
                 'error' => true,

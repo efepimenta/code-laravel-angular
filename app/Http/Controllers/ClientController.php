@@ -28,7 +28,16 @@ class ClientController extends Controller
     public function index()
     {
         try {
-            return $this->repository->skipPresenter()->all();
+            $data = $this->repository->all();
+            if (isset($data['data'])) {
+                return [
+                    'data' => $data['data']
+                ];
+            }
+            return [
+                'error' => true,
+                'message' => 'nenhum cliente existente.'
+            ];
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
@@ -50,9 +59,11 @@ class ClientController extends Controller
     public function show($id)
     {
         try {
-            $data = $this->repository->skipPresenter()->findWhere(['id' => $id]);
-            if (count($data) === 1) {
-                return json_encode($data[0]);
+            $data = $this->repository->findWhere(['id' => $id]);
+            if (isset($data['data']) && count($data['data']) === 1) {
+                return [
+                    'data' => $data['data'][0]
+                ];
             }
             return [
                 'error' => true,

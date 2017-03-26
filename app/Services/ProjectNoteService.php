@@ -27,7 +27,7 @@ class ProjectNoteService
     public function create(array $data, $project_id)
     {
         try {
-            if (count($this->repository->findWhere(['title' => $data['title']])) > 0){
+            if (count($this->repository->skipPresenter()->findWhere(['title' => $data['title']])) > 0){
                 return [
                     'error' => true,
                     'message' => 'Nota já existe'

@@ -4,7 +4,7 @@ angular.module('app.services')
             return $resource(appConfig.baseUrl + '/client/:id', {id: '@id'}, {
                 query: {
                     method: 'GET',
-                    isArray: true
+                    isArray: true,
                 },
                 show: {
                     method: 'GET',

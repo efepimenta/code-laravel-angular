@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Laravel</title>
     @if( Config::get('app.debug') )
-        <link href="{{ asset('build/css/vendor/bootstrap.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/css/vendor/bootstrap-theme.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/components.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/flaticon.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/font-awesome.css') }}" rel="stylesheet">
     @else
         <link href="{{ elixir('css/all.css') }}" rel="stylesheet">
 @endif
@@ -41,6 +43,15 @@
                         <li><a ng-href="#/clients">Client List</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#/clients/new">New Client</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Project <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-href="#/projects">Project List</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#/project/new">New Project</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -97,20 +108,30 @@
     <script src="build/js/config/login.js"></script>
     <script src="build/js/config/clients.js"></script>
     <script src="build/js/config/projects.notes.js"></script>
+    <script src="build/js/config/projects.js"></script>
     {{--CONTROLLERS--}}
     <script src="{{ asset('build/js/controllers/home.js') }}"></script>
     <script src="{{ asset('build/js/controllers/login.js') }}"></script>
+    {{--clients--}}
     <script src="{{ asset('build/js/controllers/client/clientList.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/clientNew.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/clientEdit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/clientRemove.js') }}"></script>
+    {{--projects--}}
+    <script src="{{ asset('build/js/controllers/project/projectList.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/projectNew.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/projectEdit.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/projectRemove.js') }}"></script>
+    {{--project notes--}}
     <script src="{{ asset('build/js/controllers/project/note/noteList.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/noteNew.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/noteEdit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/noteRemove.js') }}"></script>
     {{--SERVICES--}}
     <script src="{{ asset('build/js/services/client.js') }}"></script>
+    <script src="{{ asset('build/js/services/user.js') }}"></script>
     <script src="{{ asset('build/js/services/project.note.js') }}"></script>
+    <script src="{{ asset('build/js/services/project.js') }}"></script>
 @else
     <script src="{{ elixir('js/all.js') }}"></script>
 @endif
