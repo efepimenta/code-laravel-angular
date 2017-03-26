@@ -2,26 +2,25 @@
 
 namespace CodeProject\Http\Controllers;
 
-use CodeProject\Repositories\ProjectNoteRepository;
-use CodeProject\Services\ProjectNoteService;
+use CodeProject\Http\Requests;
+use CodeProject\Repositories\ProjectTaskRepository;
+use CodeProject\Services\ProjectTaskService;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ProjectNoteController extends Controller
+class ProjectTaskController extends Controller
 {
-
     /**
-     * @var NoteProjectRepository
+     * @var ProjectTaskRepository
      */
     protected $repository;
 
     /**
-     * @var NoteProjectService
+     * @var ProjectTaskService
      */
     protected $service;
 
 
-    public function __construct(ProjectNoteRepository $repository, ProjectNoteService $service)
+    public function __construct(ProjectTaskRepository $repository, ProjectTaskService $service)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -37,14 +36,14 @@ class ProjectNoteController extends Controller
             }
             return [
                 'error' => true,
-                'message' => 'Projeto não encontrado'
+                'message' => 'Tarefa não encontrada'
             ];
         } catch (ModelNotFoundException $e) {
             return ['Nada foi encontrado'];
         } catch (NotFoundHttpException $e) {
             return [
                 'error' => true,
-                'message' => 'Este projeto não existe.'
+                'message' => 'Esta tarefa não existe.'
             ];
         } catch (\Exception $e) {
             return [
@@ -54,23 +53,23 @@ class ProjectNoteController extends Controller
         }
     }
 
-    public function show($project_id, $noteId)
+    public function show($project_id, $task_id)
     {
         try {
-            $notes = $this->repository->findWhere(['project_id' => $project_id, 'id' => $noteId]);
+            $notes = $this->repository->findWhere(['project_id' => $project_id, 'id' => $task_id]);
             if (count($notes) > 0) {
                 return $notes;
             }
             return [
                 'error' => true,
-                'message' => 'Projeto / nota não encontrado(s)'
+                'message' => 'Projeto / tarefa não encontrado(s)'
             ];
         } catch (ModelNotFoundException $e) {
             return ['Pesquisa não retornou resultado'];
         } catch (NotFoundHttpException $e) {
             return [
                 'error' => true,
-                'message' => 'Este projeto/nota não existe(em).'
+                'message' => 'Este projeto/tarefa não existe(em).'
             ];
         } catch (\Exception $e) {
             return [
@@ -85,13 +84,13 @@ class ProjectNoteController extends Controller
         return $this->service->create($request->all(), $project_id);
     }
 
-    public function update(Request $request, $project_id, $note_id)
+    public function update(Request $request, $project_id, $task_id)
     {
-        return $this->service->update($request->all(), $project_id, $note_id);
+        return $this->service->update($request->all(), $project_id, $task_id);
     }
 
-    public function delete($project_id, $note_id)
+    public function delete($project_id, $task_id)
     {
-        return $this->service->delete($project_id, $note_id);
+        return $this->service->delete($project_id, $task_id);
     }
 }

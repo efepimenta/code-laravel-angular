@@ -2,23 +2,23 @@
 
 namespace CodeProject\Services;
 
-use CodeProject\Repositories\ProjectNoteRepository;
-use CodeProject\Validators\ProjectNoteValidator;
+use CodeProject\Repositories\ProjectTaskRepository;
+use CodeProject\Validators\ProjectTaskValidator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Validator\Exceptions\ValidatorException;
 
-class ProjectNoteService
+class ProjectTaskService
 {
     /**
-     * @var ProjectNoteRepository
+     * @var ProjectTaskRepository
      */
     protected $repository;
     /**
-     * @var ProjectNoteValidator
+     * @var ProjectTaskValidator
      */
     protected $validator;
 
-    public function __construct(ProjectNoteRepository $repository, ProjectNoteValidator $validator)
+    public function __construct(ProjectTaskRepository $repository, ProjectTaskValidator $validator)
     {
         $this->repository = $repository;
         $this->validator = $validator;
@@ -38,7 +38,7 @@ class ProjectNoteService
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
-                'message' => 'Projeto/nota não encontrado'
+                'message' => 'Projeto/tarefa não encontrado'
             ];
         } catch (\Exception $e) {
             return [
@@ -48,13 +48,13 @@ class ProjectNoteService
         }
     }
 
-    public function update(array $data, $project_id, $note_id)
+    public function update(array $data, $project_id, $task_id)
     {
         try {
             $data['project_id'] = $project_id;
             $this->validator->with($data)->passesOrFail();
-            $this->repository->update($data, $note_id);
-            return json_encode(['Message' => "Project note {$data['title']} has updated"]);
+            $this->repository->update($data, $task_id);
+            return json_encode(['Message' => "Project task {$data['name']} has updated"]);
         } catch (ValidatorException $e) {
             return [
                 'error' => true,
@@ -63,7 +63,7 @@ class ProjectNoteService
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
-                'message' => 'Este projeto/nota não existe(em).'
+                'message' => 'Este projeto/tarefa não existe(em).'
             ];
         } catch (\Exception $e) {
             return [
@@ -73,19 +73,19 @@ class ProjectNoteService
         }
     }
 
-    public function delete($project_id, $note_id)
+    public function delete($project_id, $task_id)
     {
         try {
-            $note = $this->repository->findWhere(['project_id' => $project_id, 'id' => $note_id]);
+            $note = $this->repository->findWhere(['project_id' => $project_id, 'id' => $task_id]);
             if (count($note) > 0){
-                $this->repository->delete($note_id);
+                $this->repository->delete($task_id);
                 return [
-                    'message' => 'Nota excluída'
+                    'message' => 'Tarefa excluída'
                 ];
             }
             return [
                 'error' => true,
-                'message' => "Este projeto/nota não existe(em)."
+                'message' => "Este projeto/tarefa não existe(em)."
             ];
 
         } catch (ValidatorException $e) {
@@ -96,7 +96,7 @@ class ProjectNoteService
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
-                'message' => 'Este projeto/nota não existe(em).'
+                'message' => 'Este projeto/tarefa não existe(em).'
             ];
         } catch (\Exception $e) {
             return [

@@ -4,13 +4,14 @@ namespace CodeProject\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectNote extends Model
+class ProjectTask extends Model
 {
-
     protected $fillable = [
         'project_id',
-        'title',
-        'note'
+        'name',
+        'start_date',
+        'due_date',
+        'status'
     ];
 
     public function project()

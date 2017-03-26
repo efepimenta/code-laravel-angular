@@ -4,18 +4,24 @@ namespace CodeProject\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectNote extends Model
+class ProjectMember extends Model
 {
+
+    protected $table = 'project_members';
 
     protected $fillable = [
         'project_id',
-        'title',
-        'note'
+        'user_id',
     ];
 
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

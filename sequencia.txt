@@ -10,7 +10,7 @@ criar um controller
 	depois de criado services, da pra alterar o controller pra usar os mesmos
 
 Models:
-    php artisan make:model NomeDoModel (-m pra criar a miration)
+    php artisan make:model NomeDoModel (-m pra criar a migration)
     colocar os models em app/Entities (por exemplo) (criar a pasta e ajustar o namespace do que precisar {models, factory, seeders, etc})
 
 criar uma migration (melhor fazer ao criar o model)
@@ -77,7 +77,8 @@ para criar dados fake
 
 ----------------------------------
 sequencia de um novo sei la
-- migration (php artisan make:migration client_project_notes_tables --create project_notes)
+- migration (php artisan make:migration client_project_notes_tables --create=project_notes)
+    em caso de alteracao de tabela: (php artisan make:migration add_id_in_client_project_notes_tables --table=project_notes)
 	configura o arquivo gerado
 	roda php artisan migrate
 - criar a entity (php artisan make:entity NoteProject)
@@ -85,6 +86,7 @@ sequencia de um novo sei la
 - configura a seed
 	php artisan migrate:refresh --seed
 - atualiza o bind no provider
+- criar ou atualizar o validator e o service
 
 coisas gerais
 desativar csrf:
