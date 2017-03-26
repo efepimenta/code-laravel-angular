@@ -66,6 +66,24 @@
                 </li>
                 <li class="dropdown">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Project Tasks <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-href="#/project/1/tasks">Task List</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#/project/1/task/new">New Task</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Project Members <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-href="#/project/1/members">Member List</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#/project/1/member/new">New Member</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Project Files <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a ng-href="#/project/1/files">File List</a></li>
@@ -119,6 +137,8 @@
     <script src="build/js/config/login.js"></script>
     <script src="build/js/config/clients.js"></script>
     <script src="build/js/config/projects.notes.js"></script>
+    <script src="build/js/config/projects.tasks.js"></script>
+    <script src="build/js/config/projects.members.js"></script>
     <script src="build/js/config/projects.files.js"></script>
     <script src="build/js/config/projects.js"></script>
     {{--CONTROLLERS--}}
@@ -139,6 +159,16 @@
     <script src="{{ asset('build/js/controllers/project/note/noteNew.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/noteEdit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/noteRemove.js') }}"></script>
+    {{--project tasks--}}
+    <script src="{{ asset('build/js/controllers/project/task/taskList.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/task/taskNew.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/task/taskEdit.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/task/taskRemove.js') }}"></script>
+    {{--project members--}}
+    <script src="{{ asset('build/js/controllers/project/member/memberList.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/member/memberNew.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/member/memberEdit.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/member/memberRemove.js') }}"></script>
     {{--project files--}}
     <script src="{{ asset('build/js/controllers/project/file/fileList.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/file/fileNew.js') }}"></script>
@@ -149,6 +179,8 @@
     <script src="{{ asset('build/js/services/client.js') }}"></script>
     <script src="{{ asset('build/js/services/user.js') }}"></script>
     <script src="{{ asset('build/js/services/project.note.js') }}"></script>
+    <script src="{{ asset('build/js/services/project.task.js') }}"></script>
+    <script src="{{ asset('build/js/services/project.member.js') }}"></script>
     <script src="{{ asset('build/js/services/project.file.js') }}"></script>
     <script src="{{ asset('build/js/services/project.js') }}"></script>
     {{--FILTER--}}

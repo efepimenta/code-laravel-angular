@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Filesystem\Filesystem;
 use Prettus\Validator\Exceptions\ValidatorException;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class ProjectService
 {
@@ -139,14 +140,14 @@ class ProjectService
         }
     }
 
-    public function addMember($data, $projectId)
+    public function addMember($projectId, $member_id)
     {
         try {
-            if (!$this->isMember($projectId, $data['member_id'])) {
-                ProjectMember::create(['project_id' => $projectId, 'member_id' => $data['member_id']]);
-                return ['Message' => 'Membro agora faz parte deste projeto'];
+            if (!$this->isMember($projectId, $member_id)) {
+                ProjectMember::create(['project_id' => $projectId, 'member_id' => $member_id]);
+                return ['message' => 'Membro agora faz parte deste projeto'];
             }
-            return ['Message' => 'Membro já faz parte deste projeto'];
+            return ['error' => true, 'message' => 'Membro já faz parte deste projeto'];
         } catch (\Exception $e) {
             return [
                 'error' => true,
@@ -158,6 +159,9 @@ class ProjectService
     private function isMember($projectId, $memberId)
     {
         $member = $this->member_repository->findWhere(['project_id' => $projectId, 'member_id' => $memberId]);
+        if (isset($member['data'])){
+            return count($member['data']) > 0;
+        }
         return count($member) > 0;
     }
 
@@ -221,5 +225,30 @@ class ProjectService
                 'message' => $e->getMessage()
             ];
         }
+    }
+
+    public function checkPermission($id)
+    {
+        if ($this->checkProjectOwner($id) || $this->checkProjectMember($id)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function checkProjectOwner($id)
+    {
+        if ($this->repository->isOwner($id, Authorizer::getResourceOwnerId())) {
+            return true;
+        }
+        return false;
+    }
+
+    private function checkProjectMember($id)
+    {
+
+        if ($this->repository->hasMember($id, Authorizer::getResourceOwnerId())) {
+            return true;
+        }
+        return false;
     }
 }

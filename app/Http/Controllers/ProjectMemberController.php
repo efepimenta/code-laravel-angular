@@ -26,12 +26,42 @@ class ProjectMemberController extends Controller
         $this->service = $service;
     }
 
-    public function show($project_id)
+    public function index($project_id)
     {
         try {
             $members = $this->repository->findWhere(['project_id' => $project_id]);
-            if (count($members) > 0) {
-                return $members;
+            if (isset($members['data'])) {
+                return [
+                    'data' => array_reverse($members['data'])
+                ];
+            }
+            return [
+                'error' => true,
+                'message' => 'Projeto / membros não encontrado(s)'
+            ];
+        } catch (ModelNotFoundException $e) {
+            return ['Pesquisa não retornou resultado'];
+        } catch (NotFoundHttpException $e) {
+            return [
+                'error' => true,
+                'message' => 'Este projeto/menbro não existe(em).'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function show($project_id, $member_id)
+    {
+        try {
+            $members = $this->repository->findWhere(['project_id' => $project_id, 'member_id'=> $member_id]);
+            if (isset($members['data'])) {
+                return [
+                    'data' => $members['data']
+                ];
             }
             return [
                 'error' => true,

@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Novo Membro</div>
+                <div class="panel-body">
+
+                    <div ng-if="member.resp.error">
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> Alguma coisa errada aconteceu.<br><br>
+                            <div>
+                                Servidor diz: {{ member.resp.message }}
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-warning" onclick="javascript:window.history.go(-1)">
+                            Voltar
+                        </button>
+                    </div>
+
+                    <div ng-hide="member.resp.error">
+                        <form class="form-horizontal" role="form" name="form" method="POST" ng-submit="save()">
+
+                            <div class="form-group"
+                                 ng-class="{'has-error' : !form.client.$valid && form.client.$touched}">
+                                <label class="col-md-4 control-label">Client</label>
+                                <div class="col-md-6">
+                                    <input class="form-control" type="text" name="client" ng-model="clientSelected"
+                                           uib-typeahead="cli as cli.name for cli in getClients($viewValue)|limitTo:5"
+                                           typeahead-input-formatter="formatName($model)"
+                                           typeahead-on-select="selectClient($item)"
+                                           typeahead-editable="false"
+                                           autocomplete="off" required>
+                                    <div class="help-block" ng-messages="form.client.$error"
+                                         ng-show="form.client.$touched">
+                                        <div ng-message="required">Campo obrigatório</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Salvar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

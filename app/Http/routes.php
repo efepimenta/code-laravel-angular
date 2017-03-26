@@ -21,9 +21,10 @@ Route::group(['middleware' => 'oauth'], function () {
         Route::put('{project_id}/note/{note_id}', 'ProjectNoteController@update');
         Route::delete('{project_id}/note/{note_id}', 'ProjectNoteController@delete');
 
-        Route::get('{project_id}/members', 'ProjectMemberController@show');
-        Route::post('{project_id}/members', 'ProjectController@addMember');
-        Route::delete('{project_id}/members/{user_id}', 'ProjectController@removeMember');
+        Route::get('{project_id}/members', 'ProjectMemberController@index');
+        Route::get('{project_id}/member/{member_id}', 'ProjectMemberController@show');
+        Route::post('{project_id}/member/{member_id}', 'ProjectController@addMember');
+        Route::delete('{project_id}/member/{member_id}', 'ProjectController@removeMember');
 
         Route::get('{project_id}/task', 'ProjectTaskController@index');
         Route::get('{project_id}/task/{task_id}', 'ProjectTaskController@show');
@@ -33,7 +34,7 @@ Route::group(['middleware' => 'oauth'], function () {
 
         Route::get('{project_id}/files', 'ProjectFileController@index');
         Route::get('{project_id}/file/{fileId}', 'ProjectFileController@show');
-        Route::get('file/{fileId}/download', 'ProjectFileController@download');
+        Route::get('{project_id}/file/{fileId}/download', 'ProjectFileController@download');
         Route::post('{project_id}/file', 'ProjectFileController@store');
         Route::put('{project_id}/file/{fileId}', 'ProjectFileController@update');
         Route::delete('{project_id}/file/{fileId}', 'ProjectFileController@destroy');

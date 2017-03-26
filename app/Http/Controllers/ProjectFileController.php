@@ -59,7 +59,7 @@ class ProjectFileController extends Controller
         return $this->repository->update($request->all(), $file_id);
     }
 
-    public function download($file_id)
+    public function download($project_id, $file_id)
     {
         $file_path = $this->service->getFilePath($file_id);
         $file_content = file_get_contents($file_path);

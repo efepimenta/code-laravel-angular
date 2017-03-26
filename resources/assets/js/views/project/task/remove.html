@@ -4,22 +4,22 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Exclusão de Nota</div>
                 <div class="panel-body">
-                    <div ng-if="note.resp.error">
+                    <div ng-if="task.resp.error">
                         <div class="alert alert-danger">
                             <strong>Whoops!</strong> Alguma coisa errada aconteceu.<br><br>
                             <div>
-                                Servidor diz: {{ note.resp.message }}
+                                Servidor diz: {{ task.resp.message }}
                             </div>
                         </div>
                         <button type="button" class="btn btn-warning" onclick="javascript:window.history.go(-1)">
                             Voltar
                         </button>
                     </div>
-                    <div ng-hide="note.resp.error">
+                    <div ng-hide="task.resp.error">
                         <p>Dados da Nota a ser excluída</p>
                         <ul>
-                            <li><strong>Title:</strong> {{ note.title }}</li>
-                            <li><strong>Note:</strong> {{ note.note }}</li>
+                            <li><strong>Name:</strong> {{ task.name }}</li>
+                            <li><strong>Status:</strong> {{ task.status }}</li>
                         </ul>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
