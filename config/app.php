@@ -151,11 +151,13 @@ return [
         /*
          * Application Service Providers...
          */
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
+        LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
         CodeProject\Providers\AppServiceProvider::class,
         CodeProject\Providers\AuthServiceProvider::class,
         CodeProject\Providers\EventServiceProvider::class,
         CodeProject\Providers\RouteServiceProvider::class,
-        Prettus\Repository\Providers\RepositoryServiceProvider::class,
         CodeProject\Providers\CodeProjectRepositoryProvider::class,
 
     ],
@@ -203,6 +205,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Authorizer' => LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
 
     ],
 

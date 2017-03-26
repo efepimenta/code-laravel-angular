@@ -27,6 +27,12 @@ class ProjectTaskService
     public function create(array $data, $project_id)
     {
         try {
+            if (count($this->repository->findWhere(['name' => $data['name']])) > 0){
+                return [
+                    'error' => true,
+                    'message' => 'Tarefa já existe'
+                ];
+            }
             $data['project_id'] = $project_id;
             $this->validator->with($data)->passesOrFail();
             return $this->repository->create($data);

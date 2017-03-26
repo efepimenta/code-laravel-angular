@@ -5,6 +5,7 @@ namespace CodeProject\Http\Controllers;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Services\ProjectService;
 use Illuminate\Http\Request;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class ProjectController extends Controller
 {
@@ -26,7 +27,7 @@ class ProjectController extends Controller
     public function index()
     {
         try {
-            return $this->repository->with(['client', 'owner', 'notes', 'tasks'])->all();
+            return $this->repository->findWhere(['owner_id' => Authorizer::getResourceOwnerId()]);
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
@@ -42,8 +43,13 @@ class ProjectController extends Controller
 
     public function show($id)
     {
+        if (!$this->checkPermission($id)) {
+            return [
+                'Error' => 'Access forbidden',
+            ];
+        }
         try {
-            return $this->repository->with(['client', 'owner', 'notes', 'tasks'])->find($id);
+            return $this->repository->find($id);
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
@@ -57,9 +63,34 @@ class ProjectController extends Controller
         }
     }
 
-    public function create(Request $request)
+    private function checkPermission($id)
     {
-        return $this->service->create($request->all());
+        if ($this->checkProjectOwner($id) || $this->checkProjectMember($id)) {
+            return true;
+        }
+        return false;
+    }
+
+    private function checkProjectOwner($id)
+    {
+        if ($this->repository->isOwner($id, Authorizer::getResourceOwnerId())) {
+            return true;
+        }
+        return false;
+    }
+
+    private function checkProjectMember($id)
+    {
+
+        if ($this->repository->hasMember($id, Authorizer::getResourceOwnerId())) {
+            return true;
+        }
+        return false;
+    }
+
+    public function store(Request $request)
+    {
+        return $this->service->store($request->all());
     }
 
     public function update(Request $request, $id)
@@ -67,16 +98,24 @@ class ProjectController extends Controller
         return $this->service->update($request->all(), $id);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        return $this->service->delete($id);
+        if (!$this->checkPermission($id)) {
+            return [
+                'Error' => 'Access forbidden',
+            ];
+        }
+        return $this->service->destroy($id);
     }
 
-    public function addMember(Request $request, $project_id){
-        return $this->service->addMember($request->all(), $project_id);
+    public function addMember(Request $request, $projectId)
+    {
+        return $this->service->addMember($request->all(), $projectId);
     }
 
-    public function removeMember($project_id, $user_id){
-        return $this->service->removeMember($project_id, $user_id);
+    public function removeMember($projectId, $memberId)
+    {
+        return $this->service->removeMember($projectId, $memberId);
     }
+
 }

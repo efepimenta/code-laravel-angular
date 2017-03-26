@@ -50,7 +50,7 @@ class ClientController extends Controller
     public function show($id)
     {
         try {
-            return $this->repository->with('project')->find($id);
+            return $this->repository->find($id);
         } catch (ModelNotFoundException $e) {
             return [
                 'error' => true,
@@ -69,9 +69,9 @@ class ClientController extends Controller
         }
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
-        return $this->service->create($request->all());
+        return $this->service->store($request->all());
     }
 
     public function update(Request $request, $id)
@@ -79,8 +79,8 @@ class ClientController extends Controller
         return $this->service->update($request->all(), $id);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        return $this->service->delete($id);
+        return $this->service->destroy($id);
     }
 }

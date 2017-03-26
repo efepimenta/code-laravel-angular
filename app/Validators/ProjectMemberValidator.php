@@ -2,8 +2,7 @@
 
 namespace CodeProject\Validators;
 
-use \Prettus\Validator\Contracts\ValidatorInterface;
-use \Prettus\Validator\LaravelValidator;
+use Prettus\Validator\LaravelValidator;
 
 class ProjectMemberValidator extends LaravelValidator {
 

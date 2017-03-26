@@ -20,6 +20,14 @@ $factory->define(CodeProject\Entities\User::class, function (Faker\Generator $fa
     ];
 });
 
+$factory->define(CodeProject\Entities\OauthClient::class, function (Faker\Generator $faker) {
+    return [
+        'id' => 'appid1',
+        'secret' => 'secret',
+        'name' => 'AngularAPP',
+    ];
+});
+
 $factory->define(CodeProject\Entities\Client::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
@@ -64,6 +72,6 @@ $factory->define(CodeProject\Entities\ProjectTask::class, function (Faker\Genera
 $factory->define(CodeProject\Entities\ProjectMember::class, function (Faker\Generator $faker) {
     return [
         'project_id' => rand(1, 5),
-        'user_id' => rand(1, 5),
+        'member_id' => rand(1, 5),
     ];
 });

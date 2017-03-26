@@ -2,11 +2,11 @@
 
 namespace CodeProject\Http\Controllers\Auth;
 
-use CodeProject\User;
-use Validator;
 use CodeProject\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+use CodeProject\User;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Validator;
 
 class AuthController extends Controller
 {

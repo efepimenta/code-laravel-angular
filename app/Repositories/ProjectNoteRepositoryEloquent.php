@@ -2,13 +2,13 @@
 
 namespace CodeProject\Repositories;
 
-use CodeProject\Entities\ProjectNote;
-use CodeProject\Validators\ProjectNoteValidator;
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use CodeProject\Repositories\NoteProjectRepository;
 use CodeProject\Entities\NoteProject;
+use CodeProject\Entities\ProjectNote;
+use CodeProject\Repositories\NoteProjectRepository;
 use CodeProject\Validators\NoteProjectValidator;
+use CodeProject\Validators\ProjectNoteValidator;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
  * Class NoteProjectRepositoryEloquent
