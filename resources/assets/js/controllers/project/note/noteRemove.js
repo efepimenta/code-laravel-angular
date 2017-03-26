@@ -12,6 +12,6 @@ angular.module('app.controllers')
                     } else {
                         $location.path('/project/1/notes');
                     }
-                })
-            }
+                });
+            };
         }]);

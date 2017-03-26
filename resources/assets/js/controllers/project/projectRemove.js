@@ -3,7 +3,7 @@ angular.module('app.controllers')
         function ($scope, $routeParams, $location, Project) {
             $scope.project = Project.show({idProject: $routeParams.idProject});
             $scope.delete = function () {
-                Project.delete_project({
+                Project.delete({
                     idProject: $routeParams.idProject
                 }, $scope.project, function (response) {
                     if (response.error === true) {
@@ -11,6 +11,6 @@ angular.module('app.controllers')
                     } else {
                         $location.path('/projects');
                     }
-                })
-            }
+                });
+            };
         }]);

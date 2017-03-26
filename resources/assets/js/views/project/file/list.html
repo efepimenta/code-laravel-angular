@@ -1,0 +1,32 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Arquivos de um Projeto</div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-responsive table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Download</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="file in files">
+                                <td>{{ file.name }}</td>
+                                <td>{{ file.description | limitTo:40 }} ...</td>
+                                <td><file-download id-file="{{ file.id }}"></file-download></td>
+                                <td>
+                                    <a ng-href="#/project/{{file.project_id}}/file/{{file.id}}/edit">Editar</a> |
+                                    <a ng-href="#/project/{{file.project_id}}/file/{{file.id}}/remove">Excluir</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,5 +8,5 @@ angular.module('app.controllers')
                         $location.path('/project/'+$routeParams.idProject+'/notes');
                     });
                 }
-            }
+            };
         }]);

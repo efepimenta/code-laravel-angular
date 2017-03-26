@@ -9,6 +9,6 @@ angular.module('app.controllers')
                     } else {
                         $location.path('/clients');
                     }
-                })
-            }
+                });
+            };
         }]);

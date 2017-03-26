@@ -2,12 +2,12 @@ angular.module('app.controllers').controller('LoginController', ['$scope', '$loc
     function ($scope, $location, $cookies, OAuth, User) {
         $scope.user = {
             username: 'fabio@email.com',
-            password: '123456',
+            password: '123456'
         };
         $scope.error = {
             error : false,
             message : ''
-        }
+        };
         $scope.login = function () {
             if ($scope.form.$valid) {
                 OAuth.getAccessToken($scope.user).then(function () {

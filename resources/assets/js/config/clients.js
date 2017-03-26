@@ -16,5 +16,5 @@ angular.module('app')
             .when('/clients/:id/remove', {
                 templateUrl: 'build/views/client/remove.html',
                 controller: 'ClientRemoveController'
-            })
+            });
     }]);
