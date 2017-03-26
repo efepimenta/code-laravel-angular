@@ -53,6 +53,7 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
         // $httpProvider.defaults.headers.put['Content-type'] = 'application/x-www-form-urlencoded;charset=utf-8';
         $httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
         // $httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformRequest;
+        $httpProvider.interceptors.push('oauthFixInterceptor');
         OAuthProvider.configure({
             baseUrl: appConfigProvider.config.baseUrl,
             clientId: 'appid1',
@@ -69,7 +70,15 @@ app.config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvi
         $routeProvider.otherwise({redirectTo: '/home'});
     }]);
 
-app.run(['$rootScope', '$window', 'OAuth', function ($rootScope, $window, OAuth) {
+app.run(['$rootScope', '$window','$location', 'OAuth', function ($rootScope, $window,$location, OAuth) {
+    $rootScope.$on('$routeChangeStart', function (event, next, current) {
+        if (next.$$route.originalPath != '/login'){
+            if (!OAuth.isAuthenticated()){
+                $location.path('login');
+            }
+        }
+    });
+
     $rootScope.$on('oauth:error', function (event, rejection) {
         // Ignore `invalid_grant` error - should be catched on `LoginController`.
         if ('invalid_grant' === rejection.data.error) {
@@ -77,12 +86,13 @@ app.run(['$rootScope', '$window', 'OAuth', function ($rootScope, $window, OAuth)
         }
 
         // Refresh token when a `invalid_token` error occurs.
-        if ('invalid_token' === rejection.data.error) {
-            return OAuth.getRefreshToken();
+        if ('access_denied' === rejection.data.error) {
+            OAuth.getRefreshToken();
+            $window.location.reload();
+            return;
         }
 
         // Redirect to `/login` with the `error_reason`.
-        var error_address = $window.location.href = '/login?error_reason=' + rejection.data.error;
-        return error_address;
+        $location.path('login');
     });
 }]);
